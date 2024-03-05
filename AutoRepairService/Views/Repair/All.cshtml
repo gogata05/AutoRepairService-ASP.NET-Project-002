@@ -1,0 +1,27 @@
+﻿@model IEnumerable<RepairViewModel>
+
+@{
+    ViewBag.Title = "All Jobs";
+}
+
+<div class="text-center row">
+    @foreach (var job in Model)
+    {
+        <div class="card col-4" style="width: 20rem;">
+            @* <img class="card-img-top" style="width: 18rem;"
+             src="@job.ImageUrl" alt="Book Image">*@
+            <div class="card-body">
+
+                <h5 class="card-title mt-1">@job.Title</h5>
+                <p class="mb-0">Description: @job.Description</p>
+                <p class="mb-0">Category: @job.Category</p>
+                <p class="mb-0">OwnerName: @job.OwnerName</p>
+                <p class="mb-0">StartDate: @job.StartDate</p>
+            </div>
+
+            <form class="input-group-sm" asp-route-movieId="@job.Id" asp-controller="Offer" asp-action="Send" method="post">
+                <input type="submit" value="Send Offer" class="fs-6 btn btn-success mb-3 p-2" />
+            </form>
+        </div>
+    }
+</div>
