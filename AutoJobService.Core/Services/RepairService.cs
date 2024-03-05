@@ -1,7 +1,5 @@
-﻿using AutoJobService.Core.IServices;
-using AutoJobService.Data.Common;
-using AutoJobService.Data.Models;
-
+﻿
+using AutoJobService.Core.IServices;
 namespace AutoJobService.Core.Services
 {
     public class RepairService : IRepairService
