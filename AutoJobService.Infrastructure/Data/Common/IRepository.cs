@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace AutoJobService.Data.Common
+namespace AutoJobService.Infrastructure.Data.Common
 {
     /// <summary>
     /// Abstraction of repository access methods

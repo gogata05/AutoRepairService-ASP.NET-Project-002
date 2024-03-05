@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-namespace AutoJobService.Data.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AutoJobService.Infrastructure.Data.Models
 {
-    public class Repair
+    public class Car
     {
         //Rename
         [Key]
@@ -14,27 +15,23 @@ namespace AutoJobService.Data.Models
 
         [Required]
         [StringLength(50)]
+        public string Brand { get; set; } = null!;
+
+        [Required]
+        public int Quantity { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string Category { get; set; }
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; } //Address
+        public string Description { get; set; }
 
         [Required]
         public string OwnerId { get; set; }
 
         [ForeignKey(nameof(OwnerId))]
         public User Owner { get; set; }
-
-        public string? MechanicId { get; set; }
-
-        [Required]
-        public bool IsTaken { get; set; }
-
-        [Required]
-        public DateTime StartDate { get; set; }
-
-        public DateTime? EndDate { get; set; }
-
     }
 }

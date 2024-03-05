@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoJobService.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
-namespace AutoJobService.Data.Common
+namespace AutoJobService.Infrastructure.Data.Common
 {
     /// <summary>
     /// Implementation of repository access methods

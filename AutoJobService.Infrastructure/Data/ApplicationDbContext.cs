@@ -1,8 +1,8 @@
-﻿using AutoJobService.Data.Models;
+﻿using AutoJobService.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace AutoJobService.Data
+namespace AutoJobService.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {

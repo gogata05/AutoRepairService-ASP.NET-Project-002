@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace AutoJobService.Data.Models
+namespace AutoJobService.Infrastructure.Data.Models
 {
     public class User : IdentityUser
     {

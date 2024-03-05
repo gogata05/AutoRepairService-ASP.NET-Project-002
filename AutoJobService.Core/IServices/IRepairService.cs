@@ -1,5 +1,4 @@
-﻿
-namespace AutoJobService.IServices
+﻿namespace AutoJobService.Core.IServices
 {
     public interface IRepairService
     {
