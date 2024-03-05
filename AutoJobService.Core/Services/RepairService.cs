@@ -1,5 +1,8 @@
 ﻿
 using AutoJobService.Core.IServices;
+using AutoJobService.Infrastructure.Data.Common;
+using AutoJobService.Infrastructure.Data.Models;
+
 namespace AutoJobService.Core.Services
 {
     public class RepairService : IRepairService
