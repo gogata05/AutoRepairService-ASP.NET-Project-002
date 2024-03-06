@@ -1,4 +1,4 @@
-namespace AutoRepairService.Models
+namespace AutoRepairService.Core.ViewModels
 {
     public class ErrorViewModel
     {
