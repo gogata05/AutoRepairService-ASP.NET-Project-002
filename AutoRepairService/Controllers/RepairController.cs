@@ -20,7 +20,6 @@ namespace AutoRepairService.Controllers
 
             return View(model);
         }
-
         [HttpPost]
         public async Task<IActionResult> Add(AddRepairViewModel model)
         {

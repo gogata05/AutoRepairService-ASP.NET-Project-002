@@ -8,10 +8,12 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
         [Required]
         public bool IsMechanic { get; set; }
 
-        [StringLength(50)]
-        public string? FirstName { get; set; } = null;
+        //[StringLength(50)]
+        //public string? FirstName { get; set; } = null;
 
-        [StringLength(50)]
-        public string? LastName { get; set; } = null;
+        //[StringLength(50)]
+        //public string? LastName { get; set; } = null;
+
+        //public IEnumerable<> MyProperty { get; set; }
     }
 }

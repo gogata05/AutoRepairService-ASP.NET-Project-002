@@ -1,4 +1,6 @@
-﻿using AutoRepairService.Core.ViewModels;
+﻿using AutoRepairService.Core.Constants;
+using AutoRepairService.Core.ViewModels;
+using AutoRepairService.Extensions;
 using AutoRepairService.Infrastructure.Data.EntityModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +13,7 @@ namespace AutoRepairService.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public UserController(
             UserManager<User> _userManager,
@@ -53,6 +56,7 @@ namespace AutoRepairService.Controllers
 
             if (result.Succeeded)
             {
+                await userManager.AddToRoleAsync(user, RoleConstants.User);
                 return RedirectToAction("Login", "User");
             }
 
@@ -107,6 +111,31 @@ namespace AutoRepairService.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> CreateRoles()
+        {
+            await roleManager.CreateAsync(new IdentityRole(RoleConstants.User));
+            await roleManager.CreateAsync(new IdentityRole(RoleConstants.Contractor));
+            await roleManager.CreateAsync(new IdentityRole(RoleConstants.Administrator));
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // [Authorize(Roles = RoleConstants.Guest)]
+        public async Task<IActionResult> AddUsersToRoles()
+        {
+            //if (User.IsInRole(RoleConstants.Guest))
+            //{
+
+            //    // user.IsContractor = true;
+            //}
+            var user = await userManager.FindByIdAsync(User.Id());
+            await userManager.AddToRoleAsync(user, RoleConstants.Contractor);
+            await userManager.RemoveFromRoleAsync(user, RoleConstants.User);
+
 
             return RedirectToAction("Index", "Home");
         }
