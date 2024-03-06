@@ -2,7 +2,7 @@
 @model AutoRepairService.Core.ViewModels.AddRepairViewModel
 
 @{
-    ViewBag.Title = "Add Job";
+    ViewBag.Title = "Add Repair";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -19,18 +19,23 @@
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form method="post">
             <div class="form-group">
-                <label asp-for="Title"></label>
-                <input asp-for="Title" class="form-control" placeholder="Job name">
-                <span asp-validation-for="Title" class="small text-danger"></span>
+                <label asp-for="Brand"></label>
+                <input asp-for="Brand" class="form-control" placeholder="Repair brand">
+                <span asp-validation-for="Brand" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model"></label>
+                <input asp-for="Model" class="form-control" placeholder="Repair model">
+                <span asp-validation-for="Model" class="small text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description"></label>
-                <input asp-for="Description" class="form-control" placeholder="Job description">
+                <input asp-for="Description" class="form-control" placeholder="Repair description">
                 <span asp-validation-for="Description" class="small text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Category"></label>
-                <input asp-for="Category" class="form-control" placeholder="Job category">
+                <input asp-for="Category" class="form-control" placeholder="Repair category">
                 <span asp-validation-for="Category" class="small text-danger"></span>
             </div>
             <div class="text-center">

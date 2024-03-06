@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "AutoJobService": {
+    "AutoRepairService": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -17,6 +17,9 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
         [StringLength(500)]
         public string Description { get; set; } = null!;
 
+        //[Required]
+        //public decimal Price { get; set; }
+
         [Required]
         public int OwnerId { get; set; }
 

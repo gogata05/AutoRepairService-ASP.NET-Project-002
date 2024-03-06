@@ -9,17 +9,21 @@ namespace AutoRepairService.Core.ViewModels
 {
     public class AddRepairViewModel
     {
+        [Required]
+        [StringLength(50)]
+        public string Brand { get; set; } = null!;
 
         [Required]
         [StringLength(50)]
-        public string Title { get; set; } = null!;
+        public string Model { get; set; } = null!;
+
 
         [Required]
         [StringLength(50)]
-        public string Category { get; set; }
+        public string Category { get; set; } = null!;
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; } //Address     
+        public string Description { get; set; } = null!;
     }
 }

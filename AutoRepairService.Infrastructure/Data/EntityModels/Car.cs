@@ -23,18 +23,18 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
         [Required]
         public int Year { get; set; }
 
-        //[Required]
-        //[StringLength(50)]
-        //public string Category { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Category { get; set; } = null!;
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
         [Required]
-        public string OwnerId { get; set; }
+        public string OwnerId { get; set; } = null!;
 
         [ForeignKey(nameof(OwnerId))]
-        public User Owner { get; set; }
+        public User Owner { get; set; } = null!;
     }
 }

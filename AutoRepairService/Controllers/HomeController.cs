@@ -1,7 +1,6 @@
 ﻿using AutoRepairService.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using AutoRepairService.Models;
 
 namespace AutoRepairService.Controllers
 {
@@ -15,11 +14,6 @@ namespace AutoRepairService.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

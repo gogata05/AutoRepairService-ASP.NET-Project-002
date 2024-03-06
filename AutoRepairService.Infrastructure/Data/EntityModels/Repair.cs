@@ -5,27 +5,36 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
 {
     public class Repair
     {
-        //Rename
         [Key]
         public int Id { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string Name { get; set; } = null!;
+        public string Brand { get; set; } = null!;
 
         [Required]
         [StringLength(50)]
-        public string Category { get; set; }
+        public string Model { get; set; } = null!;
+
+        //[Required]
+        //public int Mileage { get; set; }
+
+        //[Required]
+        //public int Year { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Category { get; set; } = null!;
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; } //Address
+        public string Description { get; set; } = null!;
 
         [Required]
-        public string OwnerId { get; set; }
+        public string OwnerId { get; set; } = null!;
 
         [ForeignKey(nameof(OwnerId))]
-        public User Owner { get; set; }
+        public User Owner { get; set; } = null!; 
 
         public string? MechanicId { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,17 @@ namespace AutoRepairService.Core.ViewModels
     {
         public int Id { get; set; }
 
-        public string Title { get; set; } = null!;
+        public string Brand { get; set; } = null!;
+
+        public string Model { get; set; } = null!;
+
+        //public int Mileage { get; set; }
+
+        //public int Year { get; set; }
 
         public string Category { get; set; } = null!;
 
-        public string Description { get; set; } = null!;//Address
+        public string Description { get; set; } = null!;
 
         public string OwnerName { get; set; } = null!;
 

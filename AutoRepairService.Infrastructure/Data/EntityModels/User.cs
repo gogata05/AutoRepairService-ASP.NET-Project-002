@@ -5,7 +5,6 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
 {
     public class User : IdentityUser
     {
-        //Rename
         [Required]
         public bool IsMechanic { get; set; }
 
