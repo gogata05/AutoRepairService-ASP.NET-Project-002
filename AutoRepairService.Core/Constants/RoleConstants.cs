@@ -8,8 +8,8 @@ namespace AutoRepairService.Core.Constants
 {
     public static class RoleConstants
     {
-        public const string User = "User";
-        public const string Contractor = "Contractor";
+        public const string Customer = "Customer";
+        public const string Mechanic = "Mechanic";
         public const string Administrator = "Administrator";
     }
 }

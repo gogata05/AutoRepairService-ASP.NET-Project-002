@@ -31,11 +31,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Repair" asp-action="All">All Repairs</a>
                         </li>
-                        @if (User.IsInRole("User"))
+                        @if (User.IsInRole("Customer"))
                         {
                             <li class="nav-item">
                                 <form class="form-inline" asp-controller="User" asp-action="AddUsersToRoles">
-                                    <button type="submit" class="nav-link btn btn-link text-dark">Become Contractor</button>
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Become Mechanic</button>
                                 </form>
                             </li>
                         }

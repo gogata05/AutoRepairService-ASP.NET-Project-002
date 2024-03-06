@@ -56,7 +56,7 @@ namespace AutoRepairService.Controllers
 
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(user, RoleConstants.User);
+                await userManager.AddToRoleAsync(user, RoleConstants.Customer);
                 return RedirectToAction("Login", "User");
             }
 
@@ -117,8 +117,8 @@ namespace AutoRepairService.Controllers
 
         public async Task<IActionResult> CreateRoles()
         {
-            await roleManager.CreateAsync(new IdentityRole(RoleConstants.User));
-            await roleManager.CreateAsync(new IdentityRole(RoleConstants.Contractor));
+            await roleManager.CreateAsync(new IdentityRole(RoleConstants.Customer));
+            await roleManager.CreateAsync(new IdentityRole(RoleConstants.Mechanic));
             await roleManager.CreateAsync(new IdentityRole(RoleConstants.Administrator));
 
             return RedirectToAction("Index", "Home");
@@ -130,11 +130,11 @@ namespace AutoRepairService.Controllers
             //if (User.IsInRole(RoleConstants.Guest))
             //{
 
-            //    // user.IsContractor = true;
+            //    // user.IsMechanic = true;
             //}
             var user = await userManager.FindByIdAsync(User.Id());
-            await userManager.AddToRoleAsync(user, RoleConstants.Contractor);
-            await userManager.RemoveFromRoleAsync(user, RoleConstants.User);
+            await userManager.AddToRoleAsync(user, RoleConstants.Mechanic);
+            await userManager.RemoveFromRoleAsync(user, RoleConstants.Customer);
 
 
             return RedirectToAction("Index", "Home");

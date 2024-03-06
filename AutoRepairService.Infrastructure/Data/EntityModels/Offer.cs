@@ -20,8 +20,11 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
         //[Required]
         //public decimal Price { get; set; }
 
+        [ForeignKey(nameof(OwnerId))]
+        public User Owner { get; set; } = null!;
+
         [Required]
-        public int OwnerId { get; set; }
+        public string OwnerId { get; set; } = null!;
 
         [Required]
         [ForeignKey(nameof(Repair))]
