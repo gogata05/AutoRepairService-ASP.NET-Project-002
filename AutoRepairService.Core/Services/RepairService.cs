@@ -13,24 +13,23 @@ namespace AutoRepairService.Core.Services
         {
             repo = _repo;
         }
-
-        public async Task AddRepairAsync(AddRepairViewModel model)
+        public async Task AddRepairAsync(string id, RepairModel model)
         {
-            var user = await repo.GetByIdAsync<User>("ed630639-ced3-4c6a-90cb-ad0603394d22");
+            var user = await repo.GetByIdAsync<User>(id);
             var repair = new Repair()
             {
                 Brand = model.Brand,
                 Model = model.Model,
-                //Mileage = model.Mileage,
                 Description = model.Description,
                 Category = model.Category,
                 Owner = user,
                 OwnerId = user.Id,
                 StartDate = DateTime.Now,
             };
-            await repo.AddAsync(repair);
+            await repo.AddAsync<Repair>(repair);
             await repo.SaveChangesAsync();
         }
+
         public async Task<IEnumerable<RepairViewModel>> GetAllRepairsAsync()
         {
             var repairs = await repo.AllReadonly<Repair>().ToListAsync();
@@ -41,13 +40,67 @@ namespace AutoRepairService.Core.Services
                     Id = j.Id,
                     Brand = j.Brand,
                     Model = j.Model,
-                    //Mileage = j.Mileage,
-                    //Year = j.Year,
                     Category = j.Category,
                     Description = j.Description,
                     OwnerName = j.Owner?.UserName ?? "No Name",
                     StartDate = j.StartDate
                 });
+        }
+        public async Task<RepairModel> GetEditAsync(int id)
+        {
+            var repair = await repo.GetByIdAsync<Repair>(id);
+
+            if (repair == null)
+            {
+                throw new Exception("JOB NOT FOUND");
+            }
+
+            //string userId = ??;
+            //if (userId != task.OwnerId)
+            //{
+            //    return Unauthorized();
+            //}
+
+            var model = new RepairModel()
+            {
+                Brand = repair.Brand,
+                Model = repair.Model,
+                Description = repair.Description,
+                Category = repair.Category
+            };
+
+            return model;
+        }
+
+        public async Task PostEditAsync(int id, RepairModel model)
+        {
+            var repair = await repo.GetByIdAsync<Repair>(id);
+
+            if (repair == null)
+            {
+                throw new Exception("JOB NOT FOUND");
+            }
+
+            repair.Brand = model.Brand;
+            repair.Model = model.Model;
+            repair.Description = model.Description;
+            repair.Category = model.Category;
+
+            await repo.SaveChangesAsync();
+        }
+        public async Task<RepairViewModel> RepairDetailsAsync(int id)
+        {
+            var repair = await repo.GetByIdAsync<Repair>(id);
+            var model = new RepairViewModel()
+            {
+                Brand = repair.Brand,
+                Model = repair.Model,
+                Description = repair.Description,
+                Category = repair.Category,
+            };
+
+            return model;
+
         }
     }
 }

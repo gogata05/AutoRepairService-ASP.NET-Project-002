@@ -18,7 +18,7 @@ namespace AutoRepairService.Infrastructure.Data
         public DbSet<Car> Cars { get; set; }
         public DbSet<Offer> Offers { get; set; }
 
-        //public DbSet<JobOffer> JobsOffers { get; set; }
+        //public DbSet<RepairOffer> JobsOffers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
