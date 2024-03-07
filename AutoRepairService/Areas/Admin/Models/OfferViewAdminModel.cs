@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoRepairService.Infrastructure.Data.EntityModels;
 
-namespace AutoRepairService.Infrastructure.Data.EntityModels
+namespace AutoRepairService.Areas.Admin.Models
 {
-    public class Offer
+    public class OfferViewAdminModel
     {
         [Key]
         public int Id { get; set; }
@@ -21,8 +18,8 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
         public List<User> Owner { get; set; } = new List<User>();
 
         [Required]
-        public string OwnerId { get; set; } = null!;
-        // or int and add Mechanic entity
+        public string OwnerId { get; set; }  //null!; 
+                                             // or int and add contractor entity
         [Required]
         public decimal Price { get; set; }
         //time

@@ -4,6 +4,7 @@ using AutoRepairService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoRepairService.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240307120251_adminArea")]
+    partial class adminArea
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,16 +240,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2fd7ed5b-2b5a-422a-9c37-bb5ba659d62f",
+                            ConcurrencyStamp = "1da0d1dd-2b03-4d63-b13b-74e7119775c2",
                             Email = "mechanic@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MECHANIC@MAIL.COM",
                             NormalizedUserName = "MECHANIC",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPomkGl4/M7palNiCgOOhmye9Sw62cUWZzwp2PMeRLSu1JMSb2i/jiPTKKPoJvs+KQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMexn5ziwoAFaFEArVAIdkxjODjdzlJ1rAS4g6EkhZJzFwKWhl0XWMWOuHDBDvd4EA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0847398d-32fe-445a-8786-1a9d6939ad64",
+                            SecurityStamp = "e54444df-fa83-4367-a6fb-8c43bde95b3f",
                             TwoFactorEnabled = false,
                             UserName = "mechanic"
                         },
@@ -255,16 +257,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "784e3323-778d-49e5-b060-0b2b4ab09056",
+                            ConcurrencyStamp = "5f90b006-ea02-4227-9bd1-5d6d84959200",
                             Email = "customer@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "CUSTOMER@MAIL.COM",
                             NormalizedUserName = "CUSTOMER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKzsHlq4P29YDBxdKFSTG6ITnvmcLPTLEzs6gWL20bGhxjkufZWhFtQSkW4QvzxJiw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMH1P0Cazyam3jrxAhMsR/9BWa6H1uzxgreDpC1WCElpWYvBcCL4QNpshPmxNuU+TA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3da85e19-56db-460c-80da-dc1671ea3ab0",
+                            SecurityStamp = "be5c9114-3db3-4cb2-8a12-b1f52dd6b1f1",
                             TwoFactorEnabled = false,
                             UserName = "customer"
                         },
@@ -272,16 +274,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "706e9c0e-8dc0-4a8c-9832-904d124b7d39",
+                            ConcurrencyStamp = "8d66a36f-2a00-44ec-ac9e-1070dcc01856",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAELc83umaBCNGzIt/SvPZZDt/K05JiRxC2sHGimIskr1sYlC0pXBWeRj5s557fnXohQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECTvMP+rrlWxmM6Z+Br2RExyVh8RBmmxF94MceaaPcRdRFjObtUJjPq5pMYQBIJyOg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3cd21c83-2bf3-4e75-bab4-1f7bcfd6b1e9",
+                            SecurityStamp = "45070994-c606-4c0d-9414-1236239323f9",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

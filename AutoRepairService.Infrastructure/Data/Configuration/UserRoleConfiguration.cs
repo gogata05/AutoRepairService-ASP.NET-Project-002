@@ -22,7 +22,7 @@ namespace AutoRepairService.Infrastructure.Data.Configuration
             };
 
             userRoles.Add(userRole);
-            //jumper
+            //customer
             userRole = new IdentityUserRole<string>()
             {
                 RoleId = "5d937746-9833-4886-83d1-3c125ad5294c",

@@ -18,11 +18,11 @@ namespace AutoRepairService.Core.ViewModels
 
         [Required]
         [StringLength(50)]
-        public string Category { get; set; }
+        public string Category { get; set; } = null!;
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
         public string? OwnerName { get; set; } = null!;
 

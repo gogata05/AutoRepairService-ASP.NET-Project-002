@@ -25,7 +25,7 @@ namespace AutoRepairService.Core.ViewModels
 
         public string OwnerName { get; set; } = null!;
 
-        public string OwnerId { get; set; }
+        public string OwnerId { get; set; } = null!;
 
         public DateTime StartDate { get; set; }
     }

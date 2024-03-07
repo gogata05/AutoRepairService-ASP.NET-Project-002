@@ -1,0 +1,49 @@
+﻿@model RepairModel
+
+@{
+    ViewBag.Title = "Add Job";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@*@if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData.ModelState["Error"].Errors.First().ErrorMessage
+    </div>
+}
+*@
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Brand"></label>
+                <input asp-for="Brand" class="form-control" placeholder="Repair brand">
+                <span asp-validation-for="Brand" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model"></label>
+                <input asp-for="Model" class="form-control" placeholder="Repair model">
+                <span asp-validation-for="Model" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input asp-for="Description" class="form-control" placeholder="Job description">
+                <span asp-validation-for="Description" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category"></label>
+                <input asp-for="Category" class="form-control" placeholder="Job category">
+                <span asp-validation-for="Category" class="small text-danger"></span>
+            </div>
+            <div class="text-center">
+                <input class="btn btn-primary mt-3 " type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
