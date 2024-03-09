@@ -6,7 +6,7 @@ namespace AutoRepairService.Core.IServices
 {
     public interface IOfferService
     {
-        Task SendOfferAsync(OfferViewModel model, int jobId, string userId);
+        Task SendOfferAsync(OfferViewModel model, int repairId, string userId);
 
         Task<IEnumerable<MyOffersViewModel>> MyOffersAsync(string userId);
 

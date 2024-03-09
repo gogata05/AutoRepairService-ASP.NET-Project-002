@@ -75,7 +75,7 @@ namespace AutoRepairService.Infrastructure.Migrations
                 keyColumn: "Id",
                 keyValue: "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
                 columns: new[] { "ConcurrencyStamp", "PasswordHash", "SecurityStamp" },
-                values: new object[] { "8d66a36f-2a00-44ec-ac9e-1070dcc01856", "AQAAAAEAACcQAAAAECTvMP+rrlWxmM6Z+Br2RExyVh8RBmmxF94MceaaPcRdRFjObtUJjPq5pMYQBIJyOg==", "45070994-c606-4c0d-9414-1236239323f9" });
+                values: new object[] { "8d66a36f-2a00-44ec-ac9e-1070dcc01856", "AQAAAAEAACcQAAAAECTvMP+rrlWxmM6Z+Br2RExyVh8RBmmxF94MceaaPcRdRFrepairtUJjPq5pMYQBIJyOg==", "45070994-c606-4c0d-9414-1236239323f9" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",

@@ -1,8 +1,10 @@
-﻿using AutoRepairService.Core.IServices;
+﻿using AutoRepairService.Core.Constants;
+using AutoRepairService.Core.IServices;
 using AutoRepairService.Core.ViewModels;
 using AutoRepairService.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 namespace AutoRepairService.Controllers
 {
     [Authorize]
@@ -26,11 +28,21 @@ namespace AutoRepairService.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(RepairModel model)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+
+            //}
             if (!ModelState.IsValid)
             {
-                return View(model);
+                foreach (var error in ModelState.Values.SelectMany(m => m.Errors))
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
 
+                return View(model);
             }
+
             var userId = User.Id();
 
             await service.AddRepairAsync(userId, model);

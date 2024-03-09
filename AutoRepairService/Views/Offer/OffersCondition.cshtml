@@ -13,10 +13,10 @@
         {
             <div class="card col-4" style="width: 20rem;">
                 @* <img class="card-img-top" style="width: 18rem;"
-        src="@job.ImageUrl" alt="Book Image">*@
+        src="@repair.ImageUrl" alt="Book Image">*@
                 <div class="card-body">
 
-                    @*<h5 class="card-title mt-1">@job.Title</h5>*@
+                    @*<h5 class="card-title mt-1">@repair.Title</h5>*@
                     <p class="mb-0">Description: @offer.Description</p>
                     <p class="mb-0">Repair Owner: @offer.RepairOwnerName</p>
                     <p class="mb-0">Price: @offer.Price.ToString()</p>
@@ -25,23 +25,23 @@
 
                 </div>
 
-                @*<form class="input-group-sm" asp-route-jobId="id" asp-controller="Offer" asp-action="Review" method="post">
+                @*<form class="input-group-sm" asp-route-repairId="id" asp-controller="Offer" asp-action="Review" method="post">
         <input type="submit" value= class="fs-6 btn btn-success mb-3 p-2" />
         </form>
                 <a asp-controller="Offer" asp-action="Review" asp-route-id=@offer.OfferId class="btn btn-primary mb-2">Review This Offer</a>
 
-                <a asp-controller="Repair" asp-action="Details" asp-route-id="@job.Id" class="btn btn-success mb-2">Details</a>
+                <a asp-controller="Repair" asp-action="Details" asp-route-id="@repair.Id" class="btn btn-success mb-2">Details</a>
 
 
-        @if (this.User.Id() == job.OwnerId)
+        @if (this.User.Id() == repair.OwnerId)
         {
-        <a asp-controller="Repair" asp-action="Edit" asp-route-id="@job.Id" class="btn btn-primary mb-2">Edit</a>
+        <a asp-controller="Repair" asp-action="Edit" asp-route-id="@repair.Id" class="btn btn-primary mb-2">Edit</a>
 
-        <a asp-controller="Repair" asp-action="Delete" asp-route-id="@job.Id" class="btn btn-danger mb-2">Delete</a>
+        <a asp-controller="Repair" asp-action="Delete" asp-route-id="@repair.Id" class="btn btn-danger mb-2">Delete</a>
         }
         else
         {
-        <a asp-controller="Offer" asp-action="Send" asp-route-id="@job.Id" class="btn btn-success mb-2">Make offer</a>
+        <a asp-controller="Offer" asp-action="Send" asp-route-id="@repair.Id" class="btn btn-success mb-2">Make offer</a>
 
         }*@
             </div>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoRepairService.Infrastructure.Data.EntityModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,11 +19,11 @@ namespace AutoRepairService.Core.ViewModels
 
         [Required]
         [StringLength(50)]
-        public string Category { get; set; } = null!;
+        public string Category { get; set; }
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; } = null!;
+        public string Description { get; set; } 
 
         public string? OwnerName { get; set; } = null!;
 

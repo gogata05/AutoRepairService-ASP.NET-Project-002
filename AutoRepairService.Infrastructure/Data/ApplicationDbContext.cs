@@ -16,27 +16,25 @@ namespace AutoRepairService.Infrastructure.Data
         public DbSet<Repair> Repairs { get; set; }
 
         public DbSet<Car> Cars { get; set; }
+
         public DbSet<Offer> Offers { get; set; }
 
-        //public DbSet<RepairOffer> JobsOffers { get; set; }
+        //public DbSet<RepairOffer> RepairsOffers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new UserRoleConfiguration());
+            //builder.ApplyConfiguration(new RepairCategoryConfiguration());
+            //builder.ApplyConfiguration(new RepairStatusConfiguration());
 
-
-            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
-                relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            }
 
             builder.Entity<RepairOffer>()
                 .HasKey(x => new { x.RepairId, x.OfferId });
 
-            //builder.Entity<CarCart>()
-            //    .HasKey(x => new { x.EquipmentId, x.CartId });
+            builder.Entity<Offer>().HasMany(a => a.Owner).WithOne().OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

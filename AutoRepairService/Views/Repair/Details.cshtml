@@ -1,7 +1,7 @@
 ﻿@model RepairViewModel
 
 @{
-    ViewBag.Title = "View Job Details";
+    ViewBag.Title = "View Repair Details";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -15,15 +15,16 @@
             <p class="card-text"><span class="fw-bold">Description: </span>@Model.Description</p>
             <p class="card-text"><span class="fw-bold">Category: </span>@Model.Category</p>
             @if (Model.OwnerId == this.User.Id())
-            {
-                <tr class="actions">
+            {   <a asp-controller="Repair" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+                <a asp-controller="Repair" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+               @* <tr class="actions">
                     <th><span class="fw-bold">Actions:</th>
 
                     <td>
                         <a asp-controller="Repair" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
                         <a asp-controller="Repair" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
                     </td>
-                </tr>
+                </tr>*@
             }
         </div>
     </div>

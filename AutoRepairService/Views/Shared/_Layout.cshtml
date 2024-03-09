@@ -1,30 +1,31 @@
-﻿@using static AutoRepairService.Core.Constants.GlobalConstants
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AutoRepairService</title>
+    <title>@ViewData["Title"] SkyDiving</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/AutoRepairService.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Skydiving.styles.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
 </head>
 <body>
+
+    <partial name="_UserMessages" />
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-
             <div class="container-fluid">
-
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AutoRepairService</a>
-
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SkyDiving</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
                         @if (!(User?.Identity?.IsAuthenticated ?? false))
                         {
                             <li class="nav-item">
@@ -34,7 +35,7 @@
 
                         @if ((User?.Identity?.IsAuthenticated ?? false))
                         {
-                            @if (User.IsInRole("Mechanic"))
+                            @if (User.IsInRole("Instructor"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Repair" asp-action="All">Repairs</a>
@@ -57,14 +58,14 @@
                         }
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="All">Cars</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Equipment" asp-action="All">Equipment</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Mechanic" asp-action="All">Mechanics</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Instructor" asp-action="All">Instuctors</a>
                         </li>
 
-                        @if ((User?.Identity?.IsAuthenticated ?? false) && User.IsInRole("Mechanic"))
+                        @if ((User?.Identity?.IsAuthenticated ?? false) && User.IsInRole("Instructor"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Offer" asp-action="OffersCondition">Offers Condition</a>
@@ -79,8 +80,8 @@
                         }
 
                     </ul>
-                    <partial name="_MenuPartial"/>
-                    <partial name="_LoginPartial"/>
+                    <partial name="_MenuPartial" />
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
@@ -93,11 +94,11 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @(DateTime.UtcNow.Year != ReleaseYear ? $"{ReleaseYear}-{DateTime.UtcNow.Year}" : $"{ReleaseYear}") AutoRepairService
+            &copy; Skydiving 2024
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

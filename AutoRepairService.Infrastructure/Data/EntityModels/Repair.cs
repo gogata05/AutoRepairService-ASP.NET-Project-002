@@ -28,13 +28,16 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; } = null!;
+        public string Description { get; set; } = null!;//Address
 
         [Required]
         public string OwnerId { get; set; } = null!;
 
         [ForeignKey(nameof(OwnerId))]
-        public User Owner { get; set; } = null!; 
+        public User Owner { get; set; } = null!;
+
+        [StringLength(50)]
+        public string? OwnerName { get; set; }
 
         public string? MechanicId { get; set; }
 
@@ -45,6 +48,8 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
         public DateTime StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
+
+        public IEnumerable<RepairOffer> RepairsOffers { get; set; } = new List<RepairOffer>();
 
     }
 }

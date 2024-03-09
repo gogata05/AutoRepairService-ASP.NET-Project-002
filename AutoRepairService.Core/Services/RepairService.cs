@@ -13,6 +13,7 @@ namespace AutoRepairService.Core.Services
         {
             repo = _repo;
         }
+
         public async Task AddRepairAsync(string id, RepairModel model)
         {
             var user = await repo.GetByIdAsync<User>(id);
@@ -22,7 +23,7 @@ namespace AutoRepairService.Core.Services
                 Model = model.Model,
                 Description = model.Description,
                 Category = model.Category,
-                Owner = user,
+                OwnerName = user.UserName,
                 OwnerId = user.Id,
                 StartDate = DateTime.Now,
             };
@@ -30,29 +31,13 @@ namespace AutoRepairService.Core.Services
             await repo.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<RepairViewModel>> GetAllRepairsAsync()
-        {
-            var repairs = await repo.AllReadonly<Repair>().ToListAsync();
-
-            return repairs
-                .Select(j => new RepairViewModel()
-                {
-                    Id = j.Id,
-                    Brand = j.Brand,
-                    Model = j.Model,
-                    Category = j.Category,
-                    Description = j.Description,
-                    OwnerName = j.Owner?.UserName ?? "No Name",
-                    StartDate = j.StartDate
-                });
-        }
         public async Task<RepairModel> GetEditAsync(int id)
         {
             var repair = await repo.GetByIdAsync<Repair>(id);
 
             if (repair == null)
             {
-                throw new Exception("JOB NOT FOUND");
+                throw new Exception("REPAIR NOT FOUND");
             }
 
             //string userId = ??;
@@ -78,7 +63,7 @@ namespace AutoRepairService.Core.Services
 
             if (repair == null)
             {
-                throw new Exception("JOB NOT FOUND");
+                throw new Exception("REPAIR NOT FOUND");
             }
 
             repair.Brand = model.Brand;
@@ -88,13 +73,34 @@ namespace AutoRepairService.Core.Services
 
             await repo.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<RepairViewModel>> GetAllRepairsAsync() // all open repairs
+        {
+            var repairs = await repo.AllReadonly<Repair>().Where(j => j.IsTaken == false).ToListAsync();
+
+            return repairs
+                .Select(j => new RepairViewModel()
+                {
+                    Id = j.Id,
+                    Brand = j.Brand,
+                    Model = j.Model,
+                    Category = j.Category,
+                    Description = j.Description,
+                    OwnerName = j.OwnerName ?? "No name",
+                    OwnerId = j.OwnerId,
+                    StartDate = j.StartDate
+                });
+
+        }
+
         public async Task<RepairViewModel> RepairDetailsAsync(int id)
         {
             var repair = await repo.GetByIdAsync<Repair>(id);
             var model = new RepairViewModel()
             {
-                Brand = repair.Brand,
+                OwnerId = repair.OwnerId,
                 Model = repair.Model,
+                Brand = repair.Brand,
                 Description = repair.Description,
                 Category = repair.Category,
             };
@@ -102,5 +108,6 @@ namespace AutoRepairService.Core.Services
             return model;
 
         }
+
     }
 }

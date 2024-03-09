@@ -281,7 +281,7 @@ namespace AutoRepairService.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECTvMP+rrlWxmM6Z+Br2RExyVh8RBmmxF94MceaaPcRdRFjObtUJjPq5pMYQBIJyOg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECTvMP+rrlWxmM6Z+Br2RExyVh8RBmmxF94MceaaPcRdRFrepairtUJjPq5pMYQBIJyOg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "45070994-c606-4c0d-9414-1236239323f9",
                             TwoFactorEnabled = false,

@@ -23,4 +23,8 @@
     <ProjectReference Include="..\AutoRepairService.Core\AutoRepairService.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Repair\" />
+  </ItemGroup>
+
 </Project>

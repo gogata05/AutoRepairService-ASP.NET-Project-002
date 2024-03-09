@@ -111,12 +111,12 @@ namespace AutoRepairService.Core.Services
         }
 
         /*repo.AllReadonly<User>().Where(u => u.Id == x.Offer.OwnerId).Select(x => x.UserName)*/// add name to offer?
-        public async Task SendOfferAsync(OfferViewModel model, int jobId, string userId)
+        public async Task SendOfferAsync(OfferViewModel model, int repairId, string userId)
         {
 
             // check model state?
             //check if offer already exist
-            var job = await repo.GetByIdAsync<Repair>(jobId);
+            var repair = await repo.GetByIdAsync<Repair>(repairId);
             var user = await repo.GetByIdAsync<User>(userId);
             var offer = new Offer()
             {
@@ -128,15 +128,15 @@ namespace AutoRepairService.Core.Services
             };
             await repo.AddAsync<Offer>(offer);
 
-            var jobOffer = new RepairOffer()
+            var repairOffer = new RepairOffer()
             {
-                RepairId = job.Id,
-                Repair = job,
+                RepairId = repair.Id,
+                Repair = repair,
                 Offer = offer,
                 OfferId = offer.Id
             };
 
-            await repo.AddAsync<RepairOffer>(jobOffer);
+            await repo.AddAsync<RepairOffer>(repairOffer);
 
             await repo.SaveChangesAsync();
 

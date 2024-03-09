@@ -30,7 +30,7 @@ namespace AutoRepairService.Areas.Admin.Models
         [StringLength(50)]
         public string? OwnerName { get; set; }
 
-        public string? ContractorId { get; set; }
+        public string? MechanicId { get; set; }
 
         [Required]
         public bool IsTaken { get; set; }

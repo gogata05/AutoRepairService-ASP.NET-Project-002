@@ -19,7 +19,7 @@ namespace AutoRepairService.Areas.Admin.Models
 
         [Required]
         public string OwnerId { get; set; }  //null!; 
-                                             // or int and add contractor entity
+                                             // or int and add mechanic entity
         [Required]
         public decimal Price { get; set; }
         //time
