@@ -15,17 +15,20 @@ namespace AutoRepairService.Core.ViewModels
 
         [Required]
         [StringLength(50)]
-        public string Model { get; set; } = null!;
+        public string CarModel { get; set; } = null!;
 
-        [Required]
-        [StringLength(50)]
-        public string Category { get; set; }
+        [Display(Name = "Category")]
+        public int CategoryId { get; set; }//here need to be 2
+
+        public IEnumerable<CategoryViewModel> RepairCategories { get; set; } = new List<CategoryViewModel>();
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; } 
+        public string Description { get; set; } = null!;
 
-        public string? OwnerName { get; set; } = null!;
+        public User? Owner { get; set; } //= null!;
+
+        public string? OwnerName { get; set; } //= null!;
 
     }
 }

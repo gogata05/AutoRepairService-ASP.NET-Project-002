@@ -13,11 +13,11 @@ namespace AutoRepairService.Core.ViewModels
 
         public string Brand { get; set; } = null!;
 
-        public string Model { get; set; } = null!;
+        public string CarModel { get; set; } = null!;
 
         public string Category { get; set; } = null!;
 
-        public string Description { get; set; } = null!;
+        public string Description { get; set; } = null!;//Address
 
         public string OwnerName { get; set; } = null!;
 

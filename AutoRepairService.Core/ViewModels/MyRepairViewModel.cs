@@ -28,7 +28,7 @@ namespace AutoRepairService.Core.ViewModels
 
         public string Status { get; set; } = null!;
 
-        public string? InstructorId { get; set; }
+        public string? MechanicId { get; set; }
 
         public DateTime StartDate { get; set; }
 

@@ -1,0 +1,33 @@
+﻿@model RepairViewModel
+
+@{
+    ViewBag.Title = "View Repair Details";
+    //ViewBag.T = $"{this.ViewContext.RouteData.Values["action"].ToString()}";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="d-flex justify-content-center">
+    <div class="card " style="width: 50rem;">
+        <div class="card-body">
+            <h3 class="card-title text-center">@Model.Brand</h3>
+            <p class="card-text"><span class="fw-bold">Model: </span>@Model.CarModel</p>
+            <p class="card-text"><span class="fw-bold">Description: </span>@Model.Description</p>
+            <p class="card-text"><span class="fw-bold">Category: </span>@Model.Category</p>
+            @if (User.IsInRole("Administrator"))
+            {
+                <a asp-area="Admin" asp-controller="Repair" asp-action="Approve" asp-route-id="@Model.Id" class="btn btn-primary">Approve</a>
+                <a asp-area="Admin" asp-controller="Repair" asp-action="Decline" asp-route-id="@Model.Id" class="btn btn-danger">Decline</a>
+               @* <tr class="actions">
+                    <th><span class="fw-bold">Actions:</th>
+
+                    <td>
+                        <a asp-controller="Repair" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+                        <a asp-controller="Repair" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>*@
+            }
+        </div>
+    </div>
+</div>

@@ -14,17 +14,13 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
 
         [Required]
         [StringLength(50)]
-        public string Model { get; set; } = null!;
-
-        //[Required]
-        //public int Mileage { get; set; }
-
-        //[Required]
-        //public int Year { get; set; }
+        public string CarModel { get; set; } = null!;
 
         [Required]
-        [StringLength(50)]
-        public string Category { get; set; } = null!;
+        public int RepairCategoryId { get; set; }
+
+        [ForeignKey(nameof(RepairCategoryId))]
+        public RepairCategory Category { get; set; } = null!;
 
         [Required]
         [StringLength(500)]
@@ -45,11 +41,25 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
         public bool IsTaken { get; set; }
 
         [Required]
+        public bool IsActive { get; set; } = false;
+        //[Required]
+        public bool IsApproved { get; set; } = false;
+
+        [Required]
+        public string Status { get; set; } = "Pending";
+
+        [Required]
         public DateTime StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
 
         public IEnumerable<RepairOffer> RepairsOffers { get; set; } = new List<RepairOffer>();
+
+        [Required]
+        public int RepairStatusId { get; set; } = 1;
+
+        [ForeignKey(nameof(RepairStatusId))]
+        public RepairStatus RepairStatus { get; set; } = null!;
 
     }
 }

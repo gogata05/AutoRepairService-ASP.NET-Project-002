@@ -1,0 +1,34 @@
+﻿@model IEnumerable<OfferServiceViewModel>
+
+@{
+    ViewBag.Title = "Review Offers";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+@if (Model.Any())
+{
+@foreach(var offer in @Model){
+
+    <div class="d-flex justify-content-center">
+        <div class="card " style="width: 50rem;">
+            <div class="card-body">
+                <h3 class="card-title text-center">New offer</h3>
+                <p class="card-text"><span class="fw-bold">Mechanic: </span>@offer.MechanicName</p>
+                <p class="card-text"><span class="fw-bold">Send offer for your repair: </span>@offer.RepairBrand (@offer.RepairCategory)</p>
+                <p class="card-text"><span class="fw-bold">Send offer for your repair: </span>@offer.RepairModel (@offer.RepairCategory)</p>
+                <p class="card-text"><span class="fw-bold">Description: </span>@offer.Description</p>
+                <p class="card-text"><span class="fw-bold">Price: </span>@offer.Price</p>
+                <p class="card-text"><span class="fw-bold">Phone number: </span>@offer.MechanicPhoneNumber</p>
+                <p class="card-text"><span class="fw-bold">Mechanic rating: </span>@offer.Rating</p>
+                <a asp-controller="Offer" asp-action="Accept" asp-route-id="@offer.Id" class="btn btn-success">Accept</a>
+                <a asp-controller="Offer" asp-action="Decline" asp-route-id="@offer.Id" class="btn btn-danger">Decline</a>
+            </div>
+        </div>
+    </div>
+}    
+}
+else
+{
+    <h3 class="text-center">No offers</h3>
+}

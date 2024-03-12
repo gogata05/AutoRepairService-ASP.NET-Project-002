@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MechanicViewModel>
+
+@{
+    ViewBag.Title = "All Mechanics";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+@if (User.IsInRole("Repairer"))
+{ //change form with <a>
+    <div class="text-center">
+        <a asp-controller="Mechanic" asp-action="Become" class="btn btn-success mb-2">Join Our Mechanics</a>
+    </div>
+}
+<div class="text-center row">
+    @if (Model.Any())
+    {
+        @foreach (var mechanic in Model)
+    {
+        <div class="card col-4" style="width: 20rem;">
+            <div class="card-body">
+                <p class="mb-0">@mechanic.FirstName</p>
+                <p class="mb-0">@mechanic.LastName</p>
+                <p class="mb-0">Phone number: @mechanic.PhoneNumber</p>
+                <p class="mb-0">Rating: @mechanic.Rating</p>
+            </div>
+        </div>
+    }
+    }
+    else
+    {
+        <h3>No mechanics available</h3>
+    }
+</div>
+
+
+

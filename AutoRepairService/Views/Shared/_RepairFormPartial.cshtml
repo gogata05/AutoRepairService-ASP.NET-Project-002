@@ -1,0 +1,41 @@
+﻿@model RepairModel
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+
+            <div class="form-group">
+                <label asp-for="Brand"></label>
+                <input asp-for="Brand" class="form-control" placeholder="Repair brand">
+                <span asp-validation-for="Brand" class="small text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CarModel"></label>
+                <input asp-for="CarModel" class="form-control" placeholder="Repair carModel">
+                <span asp-validation-for="CarModel" class="small text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control" rows="5" placeholder="Description.."> </textarea>
+                <span asp-validation-for="Description" class="small text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" class="form-control">
+                    @foreach (var category in Model.RepairCategories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="small text-danger"></span>
+            </div>
+
+            <div class="text-center">
+                <input class="btn btn-primary mt-3 " type="submit" value="Save"/>
+            </div>
+        </form>
+    </div>
+</div>

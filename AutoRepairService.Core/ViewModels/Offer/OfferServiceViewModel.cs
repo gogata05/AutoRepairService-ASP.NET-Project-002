@@ -4,17 +4,20 @@
     {
         public int Id { get; set; }
 
+        public string Rating { get; set; } = null!;
 
-        //[Required]
-        //public string Description { get; set; } = null!;
+        public string MechanicName { get; set; } = null!;
 
-        //[Required]
-        //public string OwnerId { get; set; } = null!;
+        public string MechanicPhoneNumber { get; set; } = null!;
 
-        //[Required]
-        //public int RepairId { get; set; }
+        public string RepairBrand { get; set; } = null!;
 
-        //[Required]
-        //public decimal Price { get; set; }
+        public string RepairModel { get; set; } = null!;
+
+        public string RepairDescription { get; set; } = null!;
+
+        public string RepairCategory { get; set; } = null!;
+
+        public bool? IsAccepted { get; set; }
     }
 }

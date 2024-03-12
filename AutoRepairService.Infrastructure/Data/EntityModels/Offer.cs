@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoRepairService.Infrastructure.Data.EntityModels
 {
@@ -18,17 +19,20 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
         public string Description { get; set; } = null!;
 
         [ForeignKey(nameof(OwnerId))]
-        public List<User> Owner { get; set; } = new List<User>();
+        public User Owner { get; set; } = null!;
 
         [Required]
         public string OwnerId { get; set; } = null!;
-        // or int and add Mechanic entity
+
         [Required]
+        [Precision(18, 2)]
         public decimal Price { get; set; }
-        //time
 
         public bool? IsAccepted { get; set; } = null;
 
         public IEnumerable<RepairOffer> RepairsOffers { get; set; } = new List<RepairOffer>();
+
+        [Required]
+        public bool IsActive { get; set; } = true;
     }
 }

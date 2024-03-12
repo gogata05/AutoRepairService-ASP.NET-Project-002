@@ -2,6 +2,7 @@
 using AutoRepairService.Infrastructure.Data.EntityModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using AutoRepairService.Infrastructure.Data.EntityModels;
 
 namespace AutoRepairService.Infrastructure.Data
 {
@@ -12,29 +13,43 @@ namespace AutoRepairService.Infrastructure.Data
         {
         }
 
-
         public DbSet<Repair> Repairs { get; set; }
 
-        public DbSet<Car> Cars { get; set; }
+        public DbSet<RepairCategory> RepairsCategories { get; set; }
 
         public DbSet<Offer> Offers { get; set; }
 
-        //public DbSet<RepairOffer> RepairsOffers { get; set; }
+        public DbSet<RepairOffer> RepairOffer { get; set; }
+
+        public DbSet<RepairStatus> RepairStatus { get; set; }
+
+        public DbSet<Rating> Ratings { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //Remove comment to seed the DB(Comment to start Unit tests)
 
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new UserRoleConfiguration());
-            //builder.ApplyConfiguration(new RepairCategoryConfiguration());
-            //builder.ApplyConfiguration(new RepairStatusConfiguration());
+            builder.ApplyConfiguration(new RepairStatusConfiguration());
+            builder.ApplyConfiguration(new RepairCategoryConfiguration());
+            builder.ApplyConfiguration(new CarCategoryConfiguration());
 
+            //Remove comment to seed the DB(Comment to start Unit tests)
+
+
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
 
             builder.Entity<RepairOffer>()
                 .HasKey(x => new { x.RepairId, x.OfferId });
 
-            builder.Entity<Offer>().HasMany(a => a.Owner).WithOne().OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<CarCart>()
+            //    .HasKey(x => new { x.CarId, x.CartId });
 
             base.OnModelCreating(builder);
         }

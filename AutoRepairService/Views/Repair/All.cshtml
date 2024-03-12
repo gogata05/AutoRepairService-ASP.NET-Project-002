@@ -8,36 +8,26 @@
 <hr />
 
 <div class="text-center row">
-    @foreach (var repair in Model)
+    @if (Model.Any())
     {
-        <div class="card col-4" style="width: 20rem;">
-            @* <img class="card-img-top" style="width: 18rem;"
-             src="@repair.ImageUrl" alt="Book Image">*@
-            <div class="card-body">
+        @foreach (var repair in Model)
+        {
+            <div class="card col-4" style="width: 20rem;">
+                <div class="card-body">
 
-                <h5 class="card-title mt-1">@repair.Brand</h5>
-                <p class="mb-0">Model: @repair.Model</p>
-                <p class="mb-0">Description: @repair.Description</p>
-                <p class="mb-0">Category: @repair.Category</p>
-                <p class="mb-0">OwnerName: @repair.OwnerName</p>
-                <p class="mb-0">StartDate: @repair.StartDate</p>
+                    <h5 class="card-title mt-1">@repair.Brand</h5>
+                    <p class="mb-0">Model: @repair.CarModel</p>
+                    <p class="mb-0">Description: @repair.Description</p>
+                    <p class="mb-0">Category: @repair.Category</p>
+                    <p class="mb-0">OwnerName: @repair.OwnerName</p>
+                    <p class="mb-0">StartDate: @repair.StartDate</p>
+                </div>           
+                <a asp-controller="Repair" asp-action="Details" asp-route-id="@repair.Id" class="btn btn-success mb-2">Details</a>               
             </div>
-            @*
-            <form class="input-group-sm" asp-route-repairId="@repair.Id" asp-controller="Offer" asp-action="Send" method="post">
-                <input type="submit" value="Send Offer" class="fs-6 btn btn-success mb-3 p-2" />
-            </form>*@
-            <a asp-controller="Repair" asp-action="Details" asp-route-id="@repair.Id" class="btn btn-success mb-2">Details</a>
+        }
 
-
-            @if (this.User.Id() == repair.OwnerId)
-            {
-                <a asp-controller="Repair" asp-action="Edit" asp-route-id="@repair.Id" class="btn btn-primary mb-2">Edit</a>
-            
-                <a asp-controller="Repair" asp-action="Delete" asp-route-id="@repair.Id" class="btn btn-danger mb-2">Delete</a>
-            } else {
-                <a asp-controller="Offer" asp-action="Send" asp-route-id="@repair.Id" class="btn btn-success mb-2">Make offer</a>
-
-            }
-        </div>
+    } else
+    {
+        <h3 class="text-center">No current repairs</h3>
     }
 </div>

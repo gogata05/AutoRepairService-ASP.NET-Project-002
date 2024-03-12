@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MyRepairViewModel>
+
+@{
+    ViewBag.Title = "My Repairs";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+    @if (Model.Any())
+    {
+        @foreach (var repair in Model)
+        {
+            <div class="card col-4" style="width: 20rem;">
+                @* <img class="card-img-top" style="width: 18rem;"
+        src="@repair.ImageUrl" alt="Book Image">*@
+                <div class="card-body">
+
+                    <h5 class="card-title mt-1">@repair.Brand</h5>
+                    <p class="mb-0">Model: @repair.Model</p>
+                    <p class="mb-0">Description: @repair.Description</p>
+                    <p class="mb-0">Category: @repair.Category</p>
+                    <p class="mb-0">Repair is approved: @(repair.IsApproved ? "✔" : "❌")</p>
+                    <p class="mb-0">Repair is taken: @(repair.IsTaken ? "✔" : "❌")</p>
+                    <p class="mb-0">Repair is active: @(repair.IsActive ? "✔" : "❌")</p>
+                    <p class="mb-0">MechanicId: @(repair.MechanicId == null ? "This repair is not taken" : @repair.MechanicId)  </p>
+                    <p class="mb-0">Start date: @repair.StartDate</p>
+                    <p class="mb-0">End date: @(repair.EndDate == null ? "This repair is not completed" : repair.EndDate) </p>
+                    <p class="mb-0">Status: @repair.Status</p>
+                </div>
+                @if ((this.User.Id() == @repair.OwnerId) && (@repair.IsTaken == false) && (@repair.IsApproved))
+                {
+                       <div>
+                        <a asp-controller="Repair" asp-action="Edit" asp-route-id="@repair.Id" class="btn btn-primary mb-2">Edit</a>
+
+                        <a asp-controller="Repair" asp-action="Delete" asp-route-id="@repair.Id" onclick="return confirm('Are sure wants to delete this repair?');" class="btn btn-danger mb-2">Delete</a>
+                    </div>
+                }
+                @if (repair.IsTaken && repair.IsActive && repair.IsApproved)
+                {
+                    <a asp-controller="Repair" asp-action="Complete" asp-route-id="@repair.Id" class="btn btn-primary mb-2">Mark as Completed</a>
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <p>You have no added repairs, <a href="/Repair/Add">add</a> one now</p>
+    }
+</div>
+
+

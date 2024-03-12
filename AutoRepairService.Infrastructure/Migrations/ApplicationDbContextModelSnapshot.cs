@@ -35,6 +35,9 @@ namespace AutoRepairService.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("CarCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -62,9 +65,71 @@ namespace AutoRepairService.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CarCategoryId");
+
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Car");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.CarCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CarCategory");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Electric and Hybrid"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Sport"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Sedan"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Coupe"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Minivan"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "SUV"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Crossover"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Hatchback"
+                        });
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Offer", b =>
@@ -83,16 +148,53 @@ namespace AutoRepairService.Infrastructure.Migrations
                     b.Property<bool?>("IsAccepted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("OwnerId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OwnerId");
+
                     b.ToTable("Offers");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("MechanicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RepairId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Repair", b =>
@@ -108,7 +210,7 @@ namespace AutoRepairService.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Category")
+                    b.Property<string>("CarModel")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -121,16 +223,17 @@ namespace AutoRepairService.Infrastructure.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsTaken")
                         .HasColumnType("bit");
 
                     b.Property<string>("MechanicId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Model")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("OwnerId")
                         .IsRequired()
@@ -140,14 +243,88 @@ namespace AutoRepairService.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("RepairCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RepairStatusId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
 
+                    b.HasIndex("RepairCategoryId");
+
+                    b.HasIndex("RepairStatusId");
+
                     b.ToTable("Repairs");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.RepairCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RepairsCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "General Maintenance"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Engine and Transmission"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Electrical Systems"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Suspension and Brakes"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Bodywork"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Exhaust Systems"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Tires and Alignment"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Other"
+                        });
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.RepairOffer", b =>
@@ -163,6 +340,50 @@ namespace AutoRepairService.Infrastructure.Migrations
                     b.HasIndex("OfferId");
 
                     b.ToTable("RepairOffer");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.RepairStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RepairStatus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Pending"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Approved"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Declined"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Deleted"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Completed"
+                        });
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.User", b =>
@@ -184,8 +405,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<bool>("IsMechanic")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -200,9 +429,6 @@ namespace AutoRepairService.Infrastructure.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<int?>("OwnerId")
-                        .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -233,8 +459,6 @@ namespace AutoRepairService.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("OwnerId");
-
                     b.ToTable("AspNetUsers", (string)null);
 
                     b.HasData(
@@ -242,16 +466,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0e45bed9-88d4-4b17-acb5-5fc31c78f23c",
+                            ConcurrencyStamp = "cf432971-27bd-4ed7-995c-69e18d03d674",
                             Email = "mechanic@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MECHANIC@MAIL.COM",
                             NormalizedUserName = "MECHANIC",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKtRPvjTfwDNgYoN2NeC37+Cjt/qcNx3u5jbAKe1V5hR/E+kY+XyD5OeGejQm8wPDw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGHYBoOPMO4+74QBC0g9fIsJmssMi+rbDqHgE5JejTQZZAH/UatoY32onvZ/ZcageA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a008c50e-3a17-45a7-ad2e-a4fe81f59cf1",
+                            SecurityStamp = "3d280804-0236-4045-aa54-1a7c37181f27",
                             TwoFactorEnabled = false,
                             UserName = "mechanic"
                         },
@@ -259,16 +483,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3a0002b7-e75a-41b9-9df8-a5c63cb6c437",
+                            ConcurrencyStamp = "67795ba6-71a3-451e-afdc-7b5252ff3d75",
                             Email = "customer@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "CUSTOMER@MAIL.COM",
                             NormalizedUserName = "CUSTOMER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGfyylDNhTEi5yVGrKS57AKm9IW2equiCO1LaqO5oL4zeXEaXHzvBA27fDaX7u6k+w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECHjFjMH5Y0OpkM5lvd62qK13XHlQ9PN7FaswBqgqOgmdmwTLTGe8otikX+pgmQ05A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9c0232ca-eb19-4d43-badd-a58ad6653a34",
+                            SecurityStamp = "5538a27b-8699-45d0-90b7-720e9f25f707",
                             TwoFactorEnabled = false,
                             UserName = "customer"
                         },
@@ -276,16 +500,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8e38dea3-bcbf-4f57-8974-a57d2acaba3a",
+                            ConcurrencyStamp = "09c2ed94-52e1-4ab3-a316-f296880d6361",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOTSTELe8nflLDvOcOz2GME02WBWBamjuvUwzTwkIA2af6E/HwMqarXA2x6AdxFaew==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAElVol0gt8KLvHhnDcL1CXZqhpFuk2pt+ZZZefkY0b9k2iucWmG68TM6CkyqiHdfA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ad760639-b6ed-4ffc-b8cd-679c46b4f99a",
+                            SecurityStamp = "e71758b2-9be7-4f40-b1de-22ea4ed51349",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -470,10 +694,26 @@ namespace AutoRepairService.Infrastructure.Migrations
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Car", b =>
                 {
+                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.CarCategory", null)
+                        .WithMany("Cars")
+                        .HasForeignKey("CarCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.User", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Offer", b =>
+                {
+                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Owner");
@@ -484,10 +724,26 @@ namespace AutoRepairService.Infrastructure.Migrations
                     b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.User", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.RepairCategory", "Category")
+                        .WithMany("Repairs")
+                        .HasForeignKey("RepairCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.RepairStatus", "RepairStatus")
+                        .WithMany("Repairs")
+                        .HasForeignKey("RepairStatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
                     b.Navigation("Owner");
+
+                    b.Navigation("RepairStatus");
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.RepairOffer", b =>
@@ -495,26 +751,18 @@ namespace AutoRepairService.Infrastructure.Migrations
                     b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.Offer", "Offer")
                         .WithMany("RepairsOffers")
                         .HasForeignKey("OfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.Repair", "Repair")
                         .WithMany("RepairsOffers")
                         .HasForeignKey("RepairId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Offer");
 
                     b.Navigation("Repair");
-                });
-
-            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.User", b =>
-                {
-                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.Offer", null)
-                        .WithMany("Owner")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -568,16 +816,29 @@ namespace AutoRepairService.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.CarCategory", b =>
+                {
+                    b.Navigation("Cars");
+                });
+
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Offer", b =>
                 {
-                    b.Navigation("Owner");
-
                     b.Navigation("RepairsOffers");
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Repair", b =>
                 {
                     b.Navigation("RepairsOffers");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.RepairCategory", b =>
+                {
+                    b.Navigation("Repairs");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.RepairStatus", b =>
+                {
+                    b.Navigation("Repairs");
                 });
 #pragma warning restore 612, 618
         }

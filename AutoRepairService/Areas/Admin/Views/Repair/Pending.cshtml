@@ -1,0 +1,49 @@
+﻿@model IEnumerable<RepairViewAdminModel>
+
+@{
+    ViewBag.Title = "Pending repairs";
+}
+
+<h2 class="text-center">@ViewBag.Title Admin area</h2>
+<hr />
+
+<div class="text-center row">
+    @if (Model.Any())
+    {
+    @foreach (var repair in Model)
+    {
+        <div class="card col-4" style="width: 20rem;">
+            @* <img class="card-img-top" style="width: 18rem;"
+        src="@repair.ImageUrl" alt="Book Image">*@
+            <div class="card-body">
+
+                <h5 class="card-title mt-1">@repair.Brand</h5>
+                <p class="mb-0">Model: @repair.CarModel</p>
+                <p class="mb-0">Description: @repair.Description</p>
+                <p class="mb-0">Category: @repair.Category</p>
+                <p class="mb-0">OwnerName: @repair.OwnerName</p>
+                <p class="mb-0">StartDate: @repair.StartDate</p>
+                <p class="mb-0">OwnerId: @repair.OwnerId</p>
+                <p class="mb-0">RepairId: @repair.Id</p>
+            </div>
+            @*
+        <form class="input-group-sm" asp-route-repairId="@repair.Id" asp-controller="Offer" asp-action="Send" method="post">
+        <input type="submit" value="Send Offer" class="fs-6 btn btn-success mb-3 p-2" />
+        </form>*@
+                <a asp-area="Admin" asp-controller="Repair" asp-action="Details" asp-route-id="@repair.Id" class="btn btn-success mb-2">Details</a>
+
+
+           @* @if (this.User.Id() == repair.OwnerId)
+            {
+                <a asp-controller="Repair" asp-action="Edit" asp-route-id="@repair.Id" class="btn btn-primary mb-2">Edit</a>
+
+                <a asp-controller="Repair" asp-action="Delete" asp-route-id="@repair.Id" class="btn btn-danger mb-2">Delete</a>
+            }*@
+        </div>
+    }
+    } else {
+        <h3 class="text-center">No repairs to review</h3>
+    }
+</div>
+
+
