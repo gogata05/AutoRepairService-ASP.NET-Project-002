@@ -15,6 +15,7 @@ namespace AutoRepairService.Core.ViewModels
 
         [Required]
         [StringLength(50)]
+        [Display(Name = "Model")]
         public string CarModel { get; set; } = null!;
 
         [Display(Name = "Category")]

@@ -59,11 +59,11 @@
                         }
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="All">Car</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="All">Cars</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Mechanic" asp-action="All">Instuctors</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Mechanic" asp-action="All">Mechanics</a>
                         </li>
 
                         @if ((User?.Identity?.IsAuthenticated ?? false) && User.IsInRole("Mechanic"))
