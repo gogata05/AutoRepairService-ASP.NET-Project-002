@@ -1,0 +1,103 @@
+﻿@model IEnumerable<CarViewModel>
+
+@{
+    ViewBag.Title = "Review your CART and select quantity";
+    ViewBag.Flag = Model.Any() ? "full" : "empty";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<body onload="loadCities()">
+<div class="text-center row">
+    @if(Model.Any())
+    {     
+            <form asp-controller="Cart" asp-action="Checkout" method="post">
+
+                <table class="table table-striped" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Brand</th>
+                                    <th>Model</th>
+                                    <th>Mileage</th>
+                                    <th>Year</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th></th>
+                                    <th>Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {    
+                                    <tr >
+
+                                        <td>
+                                            <label>@item.Brand</label>
+                                            <input type="hidden" asp-for="@item.Brand" readonly value="@item.Brand">
+                                        </td>
+                                        <td>
+                                            <label>@item.ModelOfCar</label>
+                                            <input type="hidden" asp-for="@item.ModelOfCar" readonly value="@item.ModelOfCar">
+                                        </td>
+                                        <td>
+                                            <label>@item.Mileage</label>
+                                            <input type="hidden" asp-for="@item.Mileage" readonly value="@item.Mileage">
+                                        </td>
+                                        <td>
+                                            <label>@item.Year</label>
+                                            <input type="hidden" asp-for="@item.Year" readonly value="@item.Year">
+                                        </td>
+                                        <td>
+                                            <input asp-for="@item.OrderQuantity" id="@("qty" + item.Id)" class="my_class" type="number" value="0" min="1" onchange="myFunction(@item.Id); totalValue();">
+                                            @* max="@item.Quantity" problem or not? *@
+                                        </td>
+                                        <td>
+                                            <label>@item.Price</label>
+                                            <input type="hidden" asp-for="@item.Price" id="@("price" + item.Id)" readonly value="@item.Price">
+                                        </td>
+                                        <td>
+                                            <a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.Id" class="btn btn-danger mb-2">Remove</a>
+                                        </td>
+                                        <td>
+                                            <input type="text" size="5" id="@("total" + item.Id)" class="cost" name="cost" readonly />
+
+                                        </td>
+                                            <input type="hidden" asp-for="@item.Id" readonly value="@item.Id">
+                                </tr>
+
+                                }
+                                  <tr>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td><label for="total">Total:</label></td>
+                                       <td><input readonly name="total" id="total" size="5"></td>
+                                  </tr>                           
+                            </tbody>
+                        </table>
+
+                <input type="hidden" name="address" id="hiddenAddress">
+                
+
+            </form> 
+
+    }
+    else
+    {
+        <h3>No items in cart</h3>
+    }
+    </div>
+
+
+
+</body>
+
+
+
+
+
+
+            

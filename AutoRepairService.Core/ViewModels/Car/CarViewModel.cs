@@ -3,7 +3,7 @@
     public class CarViewModel : CarServiceViewModel
     {
 
-        public int OrderQuantity { get; set; } = 1; // check if this deleted its a problem?
+        public int OrderQuantity { get; set; } = 1;
 
         public string? Category { get; set; }
 

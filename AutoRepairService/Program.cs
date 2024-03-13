@@ -38,6 +38,7 @@ builder.Services.AddScoped<IRepairService, RepairService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IAdminCarService, AdminCarService>();
+builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IRepairAdministrationService, RepairAdministrationService>();
 builder.Services.AddScoped<IMechanicService, MechanicService>();
 builder.Services.AddScoped<StatisticAdministrationService>();
