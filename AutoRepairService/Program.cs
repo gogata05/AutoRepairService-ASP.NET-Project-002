@@ -1,14 +1,13 @@
 
-
-using AutoRepairService.Core.IServices;
-using AutoRepairService.Core.Services;
-using AutoRepairService.Infrastructure.Data;
-using AutoRepairService.Infrastructure.Data.Common;
-using AutoRepairService.Infrastructure.Data.EntityModels;
-using AutoRepairService.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AutoRepairService.Core.IServices;
+using AutoRepairService.Core.Services;
+using AutoRepairService.Infrastructure.Data.Common;
+using AutoRepairService.Infrastructure.Data.EntityModels;
+using AutoRepairService.Infrastructure.Data;
+using AutoRepairService.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +36,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IRepairService, RepairService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IAdminCarService, AdminCarService>();
 builder.Services.AddScoped<IRepairAdministrationService, RepairAdministrationService>();
 builder.Services.AddScoped<IMechanicService, MechanicService>();
 

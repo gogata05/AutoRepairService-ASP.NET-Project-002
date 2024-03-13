@@ -35,23 +35,26 @@ namespace AutoRepairService.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("CarCategoryId")
+                    b.Property<int>("CarCategoryId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Mileage")
                         .HasColumnType("int");
 
-                    b.Property<string>("Model")
+                    b.Property<string>("ModelOfCar")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -59,6 +62,10 @@ namespace AutoRepairService.Infrastructure.Migrations
                     b.Property<string>("OwnerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -69,7 +76,122 @@ namespace AutoRepairService.Infrastructure.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Car");
+                    b.ToTable("Cars");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Brand = "BMW",
+                            CarCategoryId = 2,
+                            Description = "Best BMW",
+                            ImageUrl = "https://cdn.images.autoexposure.co.uk/AETA35653/AETV53606122_1.jpg",
+                            IsActive = true,
+                            Mileage = 11000,
+                            ModelOfCar = "BMW M2",
+                            OwnerId = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
+                            Price = 104000.00m,
+                            Year = 2019
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Brand = "Audi",
+                            CarCategoryId = 2,
+                            Description = "The perfect car for your needs",
+                            ImageUrl = "https://g1-bg.cars.bg/2023-10-26_2/653a77ef6cc86d6a120fd702o.jpg",
+                            IsActive = true,
+                            Mileage = 3000,
+                            ModelOfCar = "Audi A8 50 TDI Quattro",
+                            OwnerId = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
+                            Price = 80000.00m,
+                            Year = 2018
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Brand = "Tesla",
+                            CarCategoryId = 1,
+                            Description = "The best electric car",
+                            ImageUrl = "https://g1-bg.cars.bg/2024-01-25_2/65b241748c69930ca00ce4a5o.jpg",
+                            IsActive = true,
+                            Mileage = 1500,
+                            ModelOfCar = "Tesla Model S P100D Ludicrous",
+                            OwnerId = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
+                            Price = 99998.00m,
+                            Year = 2023
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Brand = "Lamborghini",
+                            CarCategoryId = 2,
+                            Description = "The best Lamborghini of your needs",
+                            ImageUrl = "https://g1-bg.cars.bg/2023-04-13_1/6437991c6e760656610960a2o.jpg",
+                            IsActive = true,
+                            Mileage = 5000,
+                            ModelOfCar = "Lamborghini Aventador SCarbonRoadster",
+                            OwnerId = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
+                            Price = 787000.00m,
+                            Year = 2018
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Brand = "Ferrari",
+                            CarCategoryId = 2,
+                            Description = "The best Ferrari of your needs",
+                            ImageUrl = "https://g1-bg.cars.bg/2023-03-20_2/641855494eccd5535d08a6e2o.jpg",
+                            IsActive = true,
+                            Mileage = 200,
+                            ModelOfCar = "Ferrari F8 Tributo",
+                            OwnerId = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
+                            Price = 99998.00m,
+                            Year = 2021
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Brand = "McLaren",
+                            CarCategoryId = 2,
+                            Description = "The best McLaren of your needs.",
+                            ImageUrl = "https://g1-bg.cars.bg/2023-04-13_1/64378e28d3b9b43ce0008b32o.jpg",
+                            IsActive = true,
+                            Mileage = 700,
+                            ModelOfCar = "McLaren 600 LT Clubsport",
+                            OwnerId = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
+                            Price = 489000.00m,
+                            Year = 2019
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Brand = "Aston Martin",
+                            CarCategoryId = 4,
+                            Description = "The best Aston Martin for your needs",
+                            ImageUrl = "https://g1-bg.cars.bg/2023-04-13_1/64379b4670903523a40449b6o.jpg",
+                            IsActive = true,
+                            Mileage = 400,
+                            ModelOfCar = "Aston Martin DB11 V8 Coupe",
+                            OwnerId = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
+                            Price = 461.00m,
+                            Year = 2023
+                        });
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.CarCart", b =>
+                {
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CarId", "CartId");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("CarCart");
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.CarCategory", b =>
@@ -87,7 +209,7 @@ namespace AutoRepairService.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarCategory");
+                    b.ToTable("CarsCategories");
 
                     b.HasData(
                         new
@@ -130,6 +252,25 @@ namespace AutoRepairService.Infrastructure.Migrations
                             Id = 8,
                             Name = "Hatchback"
                         });
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Offer", b =>
@@ -466,16 +607,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a126e158-946b-419f-9ba7-2baf52ef0197",
+                            ConcurrencyStamp = "60168e2c-d55d-4bd6-b88e-a3251ebced56",
                             Email = "mechanic@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MECHANIC@MAIL.COM",
                             NormalizedUserName = "MECHANIC",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPYOlhm4+3sJLuceR1CmDdQTdCier4gVU4mb+1N5yJFCP0Cu5k1DexBh2Cvsyj7fHQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ7UWYjbx1d5Qe0gG7LDGVEoUprOUG1gOUGiBK0A2TJDsT0iD/RiFGFPEcx9/MBHwA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2e692382-c5de-4a09-bef6-f8bd589224fb",
+                            SecurityStamp = "a9c6e04f-bc42-41f9-8394-d647d97b92bb",
                             TwoFactorEnabled = false,
                             UserName = "mechanic"
                         },
@@ -483,16 +624,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "de5fd86d-b416-4fe6-9999-ea7c523d8559",
+                            ConcurrencyStamp = "a3ac0f10-81b6-4718-af01-74295a334f64",
                             Email = "customer@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "CUSTOMER@MAIL.COM",
                             NormalizedUserName = "CUSTOMER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPKcNy9g9QXPQ8kbL39zybZRjieqK2VHq7MAzSwMlIjPbA7+gYU2UXK0ktnd5m8E/g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBh1oBkhj9bcdac/oqTNQJH5qKnEqUBv2ptzWWgmMs9Z7deeZJmCm/c3mGrKne0Dzw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f021cdb-6ba6-4867-96a5-15f9b1ad8983",
+                            SecurityStamp = "5c202355-5d82-4764-a271-c1185ae15398",
                             TwoFactorEnabled = false,
                             UserName = "customer"
                         },
@@ -500,16 +641,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8cffffe5-420d-4389-9ba9-fa99b3d38c80",
+                            ConcurrencyStamp = "93058d63-2257-4f33-9724-89be7d26f423",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDh20SAYJB/sfzxjYerYlivA+UUMcPLdxamZlGBK/aM1joWPAd/bVbai+Cq9IMxHGg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDSH+SyGN2uOzUG2jimutS6hFM8ZhBlMGtHrTzqTtLt54kwoZERVpr9qrB3r3qYDRw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e86f56a2-801f-4e34-8b65-e719308511e7",
+                            SecurityStamp = "89d3d3f0-267b-43ee-8894-e93e554d4e8c",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -694,10 +835,11 @@ namespace AutoRepairService.Infrastructure.Migrations
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Car", b =>
                 {
-                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.CarCategory", null)
+                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.CarCategory", "Category")
                         .WithMany("Cars")
                         .HasForeignKey("CarCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.User", "Owner")
                         .WithMany()
@@ -705,7 +847,39 @@ namespace AutoRepairService.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Category");
+
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.CarCart", b =>
+                {
+                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.Car", "Car")
+                        .WithMany("CarsCarts")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.Cart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+
+                    b.Navigation("Cart");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Cart", b =>
+                {
+                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Offer", b =>
@@ -814,6 +988,11 @@ namespace AutoRepairService.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Car", b =>
+                {
+                    b.Navigation("CarsCarts");
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.CarCategory", b =>

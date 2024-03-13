@@ -52,7 +52,7 @@ namespace AutoRepairService.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CarCategory",
+                name: "CarsCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -61,7 +61,7 @@ namespace AutoRepairService.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CarCategory", x => x.Id);
+                    table.PrimaryKey("PK_CarsCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -214,6 +214,25 @@ namespace AutoRepairService.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Carts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Carts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Offers",
                 columns: table => new
                 {
@@ -237,33 +256,35 @@ namespace AutoRepairService.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Car",
+                name: "Cars",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Brand = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ModelOfCar = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Mileage = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CarCategoryId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CarCategoryId = table.Column<int>(type: "int", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Car", x => x.Id);
+                    table.PrimaryKey("PK_Cars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Car_AspNetUsers_OwnerId",
+                        name: "FK_Cars_AspNetUsers_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Car_CarCategory_CarCategoryId",
+                        name: "FK_Cars_CarsCategories_CarCategoryId",
                         column: x => x.CarCategoryId,
-                        principalTable: "CarCategory",
+                        principalTable: "CarsCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -313,6 +334,30 @@ namespace AutoRepairService.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CarCart",
+                columns: table => new
+                {
+                    CartId = table.Column<int>(type: "int", nullable: false),
+                    CarId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarCart", x => new { x.CarId, x.CartId });
+                    table.ForeignKey(
+                        name: "FK_CarCart_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CarCart_Carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Carts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RepairOffer",
                 columns: table => new
                 {
@@ -351,13 +396,13 @@ namespace AutoRepairService.Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "IsMechanic", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 0, "de5fd86d-b416-4fe6-9999-ea7c523d8559", "customer@mail.com", false, null, false, null, false, null, "CUSTOMER@MAIL.COM", "CUSTOMER", "AQAAAAEAACcQAAAAEPKcNy9g9QXPQ8kbL39zybZRjieqK2VHq7MAzSwMlIjPbA7+gYU2UXK0ktnd5m8E/g==", null, false, "7f021cdb-6ba6-4867-96a5-15f9b1ad8983", false, "customer" },
-                    { "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 0, "8cffffe5-420d-4389-9ba9-fa99b3d38c80", "admin@mail.com", false, null, false, null, false, null, "ADMIN@MAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEDh20SAYJB/sfzxjYerYlivA+UUMcPLdxamZlGBK/aM1joWPAd/bVbai+Cq9IMxHGg==", null, false, "e86f56a2-801f-4e34-8b65-e719308511e7", false, "admin" },
-                    { "dea12856-c198-4129-b3f3-b893d8395082", 0, "a126e158-946b-419f-9ba7-2baf52ef0197", "mechanic@mail.com", false, null, false, null, false, null, "MECHANIC@MAIL.COM", "MECHANIC", "AQAAAAEAACcQAAAAEPYOlhm4+3sJLuceR1CmDdQTdCier4gVU4mb+1N5yJFCP0Cu5k1DexBh2Cvsyj7fHQ==", null, false, "2e692382-c5de-4a09-bef6-f8bd589224fb", false, "mechanic" }
+                    { "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 0, "a3ac0f10-81b6-4718-af01-74295a334f64", "customer@mail.com", false, null, false, null, false, null, "CUSTOMER@MAIL.COM", "CUSTOMER", "AQAAAAEAACcQAAAAEBh1oBkhj9bcdac/oqTNQJH5qKnEqUBv2ptzWWgmMs9Z7deeZJmCm/c3mGrKne0Dzw==", null, false, "5c202355-5d82-4764-a271-c1185ae15398", false, "customer" },
+                    { "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 0, "93058d63-2257-4f33-9724-89be7d26f423", "admin@mail.com", false, null, false, null, false, null, "ADMIN@MAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEDSH+SyGN2uOzUG2jimutS6hFM8ZhBlMGtHrTzqTtLt54kwoZERVpr9qrB3r3qYDRw==", null, false, "89d3d3f0-267b-43ee-8894-e93e554d4e8c", false, "admin" },
+                    { "dea12856-c198-4129-b3f3-b893d8395082", 0, "60168e2c-d55d-4bd6-b88e-a3251ebced56", "mechanic@mail.com", false, null, false, null, false, null, "MECHANIC@MAIL.COM", "MECHANIC", "AQAAAAEAACcQAAAAEJ7UWYjbx1d5Qe0gG7LDGVEoUprOUG1gOUGiBK0A2TJDsT0iD/RiFGFPEcx9/MBHwA==", null, false, "a9c6e04f-bc42-41f9-8394-d647d97b92bb", false, "mechanic" }
                 });
 
             migrationBuilder.InsertData(
-                table: "CarCategory",
+                table: "CarsCategories",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -401,17 +446,26 @@ namespace AutoRepairService.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "5d937746-9833-4886-83d1-3c125ad5294c", "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e" });
+                values: new object[,]
+                {
+                    { "5d937746-9833-4886-83d1-3c125ad5294c", "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e" },
+                    { "1e62f853-4a41-4652-b9a9-8e8b236e24c7", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e" },
+                    { "c8a8cf93-46b1-4e79-871a-1f4742a0db83", "dea12856-c198-4129-b3f3-b893d8395082" }
+                });
 
             migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "1e62f853-4a41-4652-b9a9-8e8b236e24c7", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "c8a8cf93-46b1-4e79-871a-1f4742a0db83", "dea12856-c198-4129-b3f3-b893d8395082" });
+                table: "Cars",
+                columns: new[] { "Id", "Brand", "CarCategoryId", "Description", "ImageUrl", "IsActive", "Mileage", "ModelOfCar", "OwnerId", "Price", "Year" },
+                values: new object[,]
+                {
+                    { 1, "BMW", 2, "Best BMW", "https://cdn.images.autoexposure.co.uk/AETA35653/AETV53606122_1.jpg", true, 11000, "BMW M2", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 104000.00m, 2019 },
+                    { 2, "Audi", 2, "The perfect car for your needs", "https://g1-bg.cars.bg/2023-10-26_2/653a77ef6cc86d6a120fd702o.jpg", true, 3000, "Audi A8 50 TDI Quattro", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 80000.00m, 2018 },
+                    { 3, "Tesla", 1, "The best electric car", "https://g1-bg.cars.bg/2024-01-25_2/65b241748c69930ca00ce4a5o.jpg", true, 1500, "Tesla Model S P100D Ludicrous", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 99998.00m, 2023 },
+                    { 4, "Lamborghini", 2, "The best Lamborghini of your needs", "https://g1-bg.cars.bg/2023-04-13_1/6437991c6e760656610960a2o.jpg", true, 5000, "Lamborghini Aventador SCarbonRoadster", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 787000.00m, 2018 },
+                    { 5, "Ferrari", 2, "The best Ferrari of your needs", "https://g1-bg.cars.bg/2023-03-20_2/641855494eccd5535d08a6e2o.jpg", true, 200, "Ferrari F8 Tributo", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 99998.00m, 2021 },
+                    { 6, "McLaren", 2, "The best McLaren of your needs.", "https://g1-bg.cars.bg/2023-04-13_1/64378e28d3b9b43ce0008b32o.jpg", true, 700, "McLaren 600 LT Clubsport", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 489000.00m, 2019 },
+                    { 7, "Aston Martin", 4, "The best Aston Martin for your needs", "https://g1-bg.cars.bg/2023-04-13_1/64379b4670903523a40449b6o.jpg", true, 400, "Aston Martin DB11 V8 Coupe", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 461.00m, 2023 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -453,14 +507,24 @@ namespace AutoRepairService.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Car_CarCategoryId",
-                table: "Car",
+                name: "IX_CarCart_CartId",
+                table: "CarCart",
+                column: "CartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cars_CarCategoryId",
+                table: "Cars",
                 column: "CarCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Car_OwnerId",
-                table: "Car",
+                name: "IX_Cars_OwnerId",
+                table: "Cars",
                 column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Carts_UserId",
+                table: "Carts",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offers_OwnerId",
@@ -506,7 +570,7 @@ namespace AutoRepairService.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Car");
+                name: "CarCart");
 
             migrationBuilder.DropTable(
                 name: "Ratings");
@@ -518,13 +582,19 @@ namespace AutoRepairService.Infrastructure.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "CarCategory");
+                name: "Cars");
+
+            migrationBuilder.DropTable(
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "Offers");
 
             migrationBuilder.DropTable(
                 name: "Repairs");
+
+            migrationBuilder.DropTable(
+                name: "CarsCategories");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

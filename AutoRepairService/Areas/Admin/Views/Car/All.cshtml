@@ -1,0 +1,44 @@
+﻿@model IEnumerable<CarViewModel>
+
+@{
+    ViewBag.Title = "All Car";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+    @if (Model.Any())
+    {
+        @foreach (var car in Model)
+    {
+        <div class="card col-4" style="width: 20rem;">
+            <img class="card-img-top" src="@car.ImageUrl" alt="Car Image">
+            <div class="card-body">
+                <h5 class="card-title mt-1">@car.Brand</h5>
+                <p class="mb-0">Model: @car.ModelOfCar</p>
+                <p class="mb-0">Mileage: @car.Mileage</p>
+                <p class="mb-0">Year: @car.Year</p>
+                <p class="mb-0">Price: @car.Price</p>
+                <p class="mb-0">Mileage: @car.Mileage</p>
+                <p class="mb-0">Made: @car.Year</p>
+                <p class="mb-0">Category: @car.Category</p>
+            </div>
+                <div>
+                <a class="btn btn-secondary mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal_@car.Id">Details</a>
+
+                <partial name="_CarDetailsAdminPartial" model="@car" />
+                
+                <a asp-area="Admin" asp-controller="Car" asp-action="Edit" asp-route-id="@car.Id" class="btn btn-primary mb-2">Edit</a>
+
+                <a asp-area="Admin" asp-controller="Car" asp-action="Delete" asp-route-id="@car.Id" onclick="return confirm('Are sure wants to delete this car?');" class="btn btn-danger mb-2">Delete</a>
+                </div>
+            </div>
+    }
+
+    }
+    else
+    {
+        <h3 class="text-center">No car</h3>
+    }
+</div>

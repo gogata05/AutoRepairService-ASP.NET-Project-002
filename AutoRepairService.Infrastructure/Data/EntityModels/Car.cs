@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutoRepairService.Infrastructure.Data.EntityModels
 {
     public class Car
     {
-        //Rename
         [Key]
         public int Id { get; set; }
 
@@ -15,7 +15,7 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
 
         [Required]
         [StringLength(50)]
-        public string Model { get; set; } = null!;
+        public string ModelOfCar { get; set; } = null!;
 
         [Required]
         public int Mileage { get; set; }
@@ -24,8 +24,10 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
         public int Year { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string Category { get; set; } = null!;
+        public int CarCategoryId { get; set; }
+
+        [ForeignKey(nameof(CarCategoryId))]
+        public CarCategory Category { get; set; } = null!;
 
         [Required]
         [StringLength(500)]
@@ -36,5 +38,16 @@ namespace AutoRepairService.Infrastructure.Data.EntityModels
 
         [ForeignKey(nameof(OwnerId))]
         public User Owner { get; set; } = null!;
+
+        public bool IsActive { get; set; } = true;
+
+        [Required]
+        [Precision(18, 2)]
+        public decimal Price { get; set; }
+
+        [StringLength(500)]
+        public string ImageUrl { get; set; } = null!;
+
+        public IEnumerable<CarCart> CarsCarts { get; set; } = new List<CarCart>();
     }
 }

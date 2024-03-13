@@ -2,7 +2,6 @@
 using AutoRepairService.Infrastructure.Data.EntityModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using AutoRepairService.Infrastructure.Data.EntityModels;
 
 namespace AutoRepairService.Infrastructure.Data
 {
@@ -17,6 +16,10 @@ namespace AutoRepairService.Infrastructure.Data
 
         public DbSet<RepairCategory> RepairsCategories { get; set; }
 
+        public DbSet<Car> Cars { get; set; }
+
+        public DbSet<CarCategory> CarsCategories { get; set; }
+
         public DbSet<Offer> Offers { get; set; }
 
         public DbSet<RepairOffer> RepairOffer { get; set; }
@@ -25,6 +28,7 @@ namespace AutoRepairService.Infrastructure.Data
 
         public DbSet<Rating> Ratings { get; set; }
 
+        public DbSet<Cart> Carts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -36,6 +40,7 @@ namespace AutoRepairService.Infrastructure.Data
             builder.ApplyConfiguration(new RepairStatusConfiguration());
             builder.ApplyConfiguration(new RepairCategoryConfiguration());
             builder.ApplyConfiguration(new CarCategoryConfiguration());
+            builder.ApplyConfiguration(new CarConfiguration());
 
             //Remove comment to seed the DB(Comment to start Unit tests)
 
@@ -48,8 +53,8 @@ namespace AutoRepairService.Infrastructure.Data
             builder.Entity<RepairOffer>()
                 .HasKey(x => new { x.RepairId, x.OfferId });
 
-            //builder.Entity<CarCart>()
-            //    .HasKey(x => new { x.CarId, x.CartId });
+            builder.Entity<CarCart>()
+                .HasKey(x => new { x.CarId, x.CartId });
 
             base.OnModelCreating(builder);
         }
