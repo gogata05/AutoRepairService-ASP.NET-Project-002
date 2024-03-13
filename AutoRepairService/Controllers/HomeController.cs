@@ -2,21 +2,36 @@
 using System.Diagnostics;
 using AutoRepairService.Core.ViewModels;
 using Microsoft.AspNetCore.Diagnostics;
+using AutoRepairService.Core.Constants;
+using AutoRepairService.Core.IServices;
 
 namespace AutoRepairService.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private readonly ICarService carService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> _logger, ICarService _carService)
         {
-            _logger = logger;
+            logger = _logger;
+            carService = _carService;
         }
 
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+            try
+            {
+                var model = await carService.GetLastThreeCars();
+                return View(model);
+            }
+            catch (Exception ms)
+            {
+                TempData[MessageConstant.ErrorMessage] = "Something went wrong!";
+                logger.LogError(ms.Message, ms);
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

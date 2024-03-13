@@ -110,7 +110,7 @@ namespace AutoRepairService.Infrastructure.Data.Configuration
                     Description = "The best Aston Martin for your needs",
                     OwnerId = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
                     IsActive = true,
-                    Price = 461.00m,
+                    Price = 461000.00m,
                     ImageUrl = "https://g1-bg.cars.bg/2023-04-13_1/64379b4670903523a40449b6o.jpg"
                 },
 
