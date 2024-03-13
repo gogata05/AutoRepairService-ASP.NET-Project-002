@@ -40,6 +40,7 @@ builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IAdminCarService, AdminCarService>();
 builder.Services.AddScoped<IRepairAdministrationService, RepairAdministrationService>();
 builder.Services.AddScoped<IMechanicService, MechanicService>();
+builder.Services.AddScoped<StatisticAdministrationService>();
 
 builder.Services.AddControllersWithViews().AddMvcOptions(options =>
 {

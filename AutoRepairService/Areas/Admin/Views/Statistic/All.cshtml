@@ -1,0 +1,46 @@
+﻿@model StatisticViewModel
+
+@{
+    ViewBag.Title = "Repairs statistics";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<body>
+
+    <div class="text-center row">
+        <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                    <th>All repairs</th>
+                        <th>Active</th>
+                        <th>Completed</th>
+                        <th>Pending</th>
+                        <th>Declined</th>
+                    </tr>
+                </thead>
+                <tbody>                   
+                     <tr>
+
+                          <td>
+                              <label>@Model.AllRepairs</label>
+                          </td>
+                          <td>
+                              <label>@Model.ActiveRepairs</label>
+                          </td>
+                          <td>
+                              <label>@Model.CompletedRepairs</label>
+                          </td>
+                          <td>
+                              <label>@Model.PendingRepairs</label>
+                          </td>
+                          <td>
+                              <label>@Model.DeclinedRepairs</label>
+                          </td>
+                     </tr>
+                   
+                </tbody>
+            </table>      
+    </div>
+
+</body>
+
