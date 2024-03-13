@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MessageViewModel>
+
+@{
+    ViewBag.Title = "Message Requests";    
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<body>
+    <div class="text-center row">
+        @if (Model.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>User Id</th>
+                        <th>Connection Id</th>
+                        <th>Created on</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <label>@item.Id</label>
+                            </td>
+                            <td>
+                                <label>@item.UserId</label>
+                            </td>
+                            <td>
+                                <label>@item.ConnectionId</label>
+                            </td>
+                            <td>
+                                <label>@item.CreatedOn</label>
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" asp-area="Admin" asp-controller="Chat" asp-action="LiveChat" asp-route-id="@item.UserId">Open Chat</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h3>No Message Requests</h3>
+        }
+    </div>
+</body>

@@ -65,6 +65,22 @@ namespace AutoRepairService.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ConnectionId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ratings",
                 columns: table => new
                 {
@@ -256,6 +272,32 @@ namespace AutoRepairService.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ItemsDetails = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderAdress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsCompleted = table.Column<bool>(type: "bit", nullable: false),
+                    ReceivedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CompletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TotalCost = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cars",
                 columns: table => new
                 {
@@ -396,9 +438,9 @@ namespace AutoRepairService.Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "IsMechanic", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 0, "a3ac0f10-81b6-4718-af01-74295a334f64", "customer@mail.com", false, null, false, null, false, null, "CUSTOMER@MAIL.COM", "CUSTOMER", "AQAAAAEAACcQAAAAEBh1oBkhj9bcdac/oqTNQJH5qKnEqUBv2ptzWWgmMs9Z7deeZJmCm/c3mGrKne0Dzw==", null, false, "5c202355-5d82-4764-a271-c1185ae15398", false, "customer" },
-                    { "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 0, "93058d63-2257-4f33-9724-89be7d26f423", "admin@mail.com", false, null, false, null, false, null, "ADMIN@MAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEDSH+SyGN2uOzUG2jimutS6hFM8ZhBlMGtHrTzqTtLt54kwoZERVpr9qrB3r3qYDRw==", null, false, "89d3d3f0-267b-43ee-8894-e93e554d4e8c", false, "admin" },
-                    { "dea12856-c198-4129-b3f3-b893d8395082", 0, "60168e2c-d55d-4bd6-b88e-a3251ebced56", "mechanic@mail.com", false, null, false, null, false, null, "MECHANIC@MAIL.COM", "MECHANIC", "AQAAAAEAACcQAAAAEJ7UWYjbx1d5Qe0gG7LDGVEoUprOUG1gOUGiBK0A2TJDsT0iD/RiFGFPEcx9/MBHwA==", null, false, "a9c6e04f-bc42-41f9-8394-d647d97b92bb", false, "mechanic" }
+                    { "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e", 0, "59db3d53-c54a-413b-9d43-1f7fa216764a", "customer@mail.com", false, null, false, null, false, null, "CUSTOMER@MAIL.COM", "CUSTOMER", "AQAAAAEAACcQAAAAEMVHc19NlZbluHNTU/reFCicfxKg81XdyS9cU433XbfHHdk4/F1jsBN+Bp3MzbE2lA==", null, false, "1a53c816-f8f3-4a70-a9a6-e63c71e32d54", false, "customer" },
+                    { "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 0, "346a69a4-8cc6-4390-94db-9e10ee917b65", "admin@mail.com", false, null, false, null, false, null, "ADMIN@MAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEBDnwgQygOfyL3JO+osrTZFbPdKDgFNjecVvvO0XQBRsIuRi44rL6rvyEJv4bCStQw==", null, false, "3e7b4d3d-1a24-4e45-9e0e-662681ba025f", false, "admin" },
+                    { "dea12856-c198-4129-b3f3-b893d8395082", 0, "e19eac55-8140-4b34-9249-420d8a367829", "mechanic@mail.com", false, null, false, null, false, null, "MECHANIC@MAIL.COM", "MECHANIC", "AQAAAAEAACcQAAAAECnBYRZ5+0fTBY0v2nRDCkVfltvOSmOY1dcJo5MXxEMN2yqEYgsxV0h1954vPLjKWg==", null, false, "b5e5fc96-32d8-4555-80f5-b6344b694f09", false, "mechanic" }
                 });
 
             migrationBuilder.InsertData(
@@ -464,7 +506,7 @@ namespace AutoRepairService.Infrastructure.Migrations
                     { 4, "Lamborghini", 2, "The best Lamborghini of your needs", "https://g1-bg.cars.bg/2023-04-13_1/6437991c6e760656610960a2o.jpg", true, 5000, "Lamborghini Aventador SCarbonRoadster", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 787000.00m, 2018 },
                     { 5, "Ferrari", 2, "The best Ferrari of your needs", "https://g1-bg.cars.bg/2023-03-20_2/641855494eccd5535d08a6e2o.jpg", true, 200, "Ferrari F8 Tributo", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 99998.00m, 2021 },
                     { 6, "McLaren", 2, "The best McLaren of your needs.", "https://g1-bg.cars.bg/2023-04-13_1/64378e28d3b9b43ce0008b32o.jpg", true, 700, "McLaren 600 LT Clubsport", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 489000.00m, 2019 },
-                    { 7, "Aston Martin", 4, "The best Aston Martin for your needs", "https://g1-bg.cars.bg/2023-04-13_1/64379b4670903523a40449b6o.jpg", true, 400, "Aston Martin DB11 V8 Coupe", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 461.00m, 2023 }
+                    { 7, "Aston Martin", 4, "The best Aston Martin for your needs", "https://g1-bg.cars.bg/2023-04-13_1/64379b4670903523a40449b6o.jpg", true, 400, "Aston Martin DB11 V8 Coupe", "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e", 461000.00m, 2023 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -532,6 +574,11 @@ namespace AutoRepairService.Infrastructure.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_ClientId",
+                table: "Orders",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RepairOffer_OfferId",
                 table: "RepairOffer",
                 column: "OfferId");
@@ -571,6 +618,12 @@ namespace AutoRepairService.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "CarCart");
+
+            migrationBuilder.DropTable(
+                name: "Messages");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Ratings");

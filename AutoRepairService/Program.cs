@@ -1,9 +1,9 @@
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoRepairService.Core.IServices;
 using AutoRepairService.Core.Services;
+using AutoRepairService.Hubs;
 using AutoRepairService.Infrastructure.Data.Common;
 using AutoRepairService.Infrastructure.Data.EntityModels;
 using AutoRepairService.Infrastructure.Data;
@@ -41,6 +41,7 @@ builder.Services.AddScoped<IAdminCarService, AdminCarService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IRepairAdministrationService, RepairAdministrationService>();
 builder.Services.AddScoped<IMechanicService, MechanicService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<StatisticAdministrationService>();
 
 builder.Services.AddControllersWithViews().AddMvcOptions(options =>
@@ -88,5 +89,6 @@ app.UseEndpoints(endpoints =>
 });
 
 app.MapRazorPages();
+app.MapHub<LiveChatHub>("/chat");
 
 app.Run();

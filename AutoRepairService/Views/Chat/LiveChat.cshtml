@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Live Chat";
+}
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">User:</div>
+        <div class="col-4"><input type="text" readonly id="userInput" value="@User?.Identity?.Name"/></div>
+    </div>
+    <div class="row">
+        <div class="col-2">Message:</div>
+        <textarea rows="5" id="messageInput"></textarea>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" class="btn btn-primary" id="sendButton" value="Send Message" />
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <a class="btn btn-danger" id="leaveGroup" asp-area="" asp-action="Index" asp-controller="Home">Leave chat</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/chat.js"></script>

@@ -174,7 +174,7 @@ namespace AutoRepairService.Infrastructure.Migrations
                             Mileage = 400,
                             ModelOfCar = "Aston Martin DB11 V8 Coupe",
                             OwnerId = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
-                            Price = 461.00m,
+                            Price = 461000.00m,
                             Year = 2023
                         });
                 });
@@ -273,6 +273,33 @@ namespace AutoRepairService.Infrastructure.Migrations
                     b.ToTable("Carts");
                 });
 
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ConnectionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Offer", b =>
                 {
                     b.Property<int>("Id")
@@ -305,6 +332,50 @@ namespace AutoRepairService.Infrastructure.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Offers");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("CompletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ItemsDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderAdress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReceivedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalCost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Rating", b =>
@@ -607,16 +678,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "60168e2c-d55d-4bd6-b88e-a3251ebced56",
+                            ConcurrencyStamp = "e19eac55-8140-4b34-9249-420d8a367829",
                             Email = "mechanic@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MECHANIC@MAIL.COM",
                             NormalizedUserName = "MECHANIC",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ7UWYjbx1d5Qe0gG7LDGVEoUprOUG1gOUGiBK0A2TJDsT0iD/RiFGFPEcx9/MBHwA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECnBYRZ5+0fTBY0v2nRDCkVfltvOSmOY1dcJo5MXxEMN2yqEYgsxV0h1954vPLjKWg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a9c6e04f-bc42-41f9-8394-d647d97b92bb",
+                            SecurityStamp = "b5e5fc96-32d8-4555-80f5-b6344b694f09",
                             TwoFactorEnabled = false,
                             UserName = "mechanic"
                         },
@@ -624,16 +695,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a3ac0f10-81b6-4718-af01-74295a334f64",
+                            ConcurrencyStamp = "59db3d53-c54a-413b-9d43-1f7fa216764a",
                             Email = "customer@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "CUSTOMER@MAIL.COM",
                             NormalizedUserName = "CUSTOMER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBh1oBkhj9bcdac/oqTNQJH5qKnEqUBv2ptzWWgmMs9Z7deeZJmCm/c3mGrKne0Dzw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMVHc19NlZbluHNTU/reFCicfxKg81XdyS9cU433XbfHHdk4/F1jsBN+Bp3MzbE2lA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5c202355-5d82-4764-a271-c1185ae15398",
+                            SecurityStamp = "1a53c816-f8f3-4a70-a9a6-e63c71e32d54",
                             TwoFactorEnabled = false,
                             UserName = "customer"
                         },
@@ -641,16 +712,16 @@ namespace AutoRepairService.Infrastructure.Migrations
                         {
                             Id = "d6b3ac1f-4fc8-d726-83d9-6d5800ce591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "93058d63-2257-4f33-9724-89be7d26f423",
+                            ConcurrencyStamp = "346a69a4-8cc6-4390-94db-9e10ee917b65",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             IsMechanic = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDSH+SyGN2uOzUG2jimutS6hFM8ZhBlMGtHrTzqTtLt54kwoZERVpr9qrB3r3qYDRw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBDnwgQygOfyL3JO+osrTZFbPdKDgFNjecVvvO0XQBRsIuRi44rL6rvyEJv4bCStQw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "89d3d3f0-267b-43ee-8894-e93e554d4e8c",
+                            SecurityStamp = "3e7b4d3d-1a24-4e45-9e0e-662681ba025f",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -891,6 +962,17 @@ namespace AutoRepairService.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Order", b =>
+                {
+                    b.HasOne("AutoRepairService.Infrastructure.Data.EntityModels.User", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("AutoRepairService.Infrastructure.Data.EntityModels.Repair", b =>

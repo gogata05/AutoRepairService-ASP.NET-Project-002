@@ -1,18 +1,39 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.my_class {
+    width: 60px;
+}
+
+.carousel {
+    width: 500px;
+    height: 500px;
+}
+
+.my_dm {
+    background-color: #D3D3D3;
+    opacity: 0.7;
+    text-align: center;
+    border-radius: 25px;
+}
+
+#map {
+    height: 400px; /* The height is 400 pixels */
+    width: 400px; /* 100% The width is the width of the web page */
 }

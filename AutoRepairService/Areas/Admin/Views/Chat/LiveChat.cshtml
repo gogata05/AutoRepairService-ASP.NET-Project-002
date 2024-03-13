@@ -1,0 +1,86 @@
+﻿@model MessageViewModel
+@{
+    ViewData["Title"] = "Admin Live Chat";
+    ViewBag.UserIdentifier = Model.UserId;    
+}
+
+<div class="container">
+    <div class="row">&nbsp;</div>    
+    <div class="row">
+        <div class="col-2">Message:</div>
+        <textarea rows="5" id="messageInput"></textarea>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" class="btn btn-primary" id="sendButton" value="Send Message" />
+        </div>
+    </div> 
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <a class="btn btn-danger" id="leaveGroup" asp-area="Admin" asp-action="MessageRequest" asp-controller="Chat">Leave chat</a>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script>
+    "use strict";
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
+
+    document.getElementById("sendButton").disabled = true;
+
+    connection.on("ReceiveMessage", function (user, message) {
+        var li = document.createElement("li");
+        document.getElementById("messagesList").appendChild(li);
+        li.textContent = `${user} : ${message}`;
+    });
+
+    connection.start().then(function () {
+        document.getElementById("sendButton").disabled = false;
+        connection.invoke("AddToGroup", '@ViewBag.UserIdentifier').catch(function (err) {
+            return console.error(err.toString());
+        });
+        connection.invoke("SendAdminMessage", "Support", "How can I help?", '@ViewBag.UserIdentifier').catch(function (err) {
+            return console.error(err.toString());
+        });
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    document.getElementById("leaveGroup").addEventListener("click", function (event) {
+        connection.invoke("SendAdminMessage", "Support", "Left the chat", '@ViewBag.UserIdentifier').catch(function (err) {
+            return console.error(err.toString());
+        });
+        connection.invoke("RemoveAdminFromGroup", '@ViewBag.UserIdentifier').catch(function (err) {
+            return console.error(err.toString());
+        });
+        connection.stop();
+    });
+
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        event.preventDefault();
+        var message = document.getElementById("messageInput");
+        if (!message.value) {
+            alert("Please enter a message.")
+            return false;
+        }
+        connection.invoke("SendAdminMessage", "Support", message.value, '@ViewBag.UserIdentifier').catch(function (err) {
+            return console.error(err.toString());
+        });
+        message.value = '';
+    });
+</script>
