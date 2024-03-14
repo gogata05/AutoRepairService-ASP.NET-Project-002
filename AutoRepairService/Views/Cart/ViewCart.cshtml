@@ -5,93 +5,383 @@
     ViewBag.Flag = Model.Any() ? "full" : "empty";
 }
 
+<script>
+
+    function cleanLocalStorage() {
+        if (localStorage.getItem("Lat") != null) {
+            localStorage.removeItem("Lat");
+            localStorage.removeItem("Lng");
+        }
+    }
+
+    cleanLocalStorage();
+
+    function getLocation() {
+        if (!navigator.geolocation) {
+            alert('Geolocation API not supported by this browser.');
+        } else {
+            navigator.geolocation.getCurrentPosition(success, error);
+        }
+    }
+    function success(position) {
+        localStorage.setItem("Lat", position.coords.latitude);
+        localStorage.setItem("Lng", position.coords.longitude);
+    }
+    function error() {
+        alert("Geolocation permission has been blocked as the user has dismissed the permission prompt several times. This can be reset in Page Info which can be accessed by clicking the lock icon next to the URL.");
+        document.getElementById("location").checked = false;
+    }
+
+    function shareLocation() {
+        const checkBtn = document.getElementById("location");
+        if (checkBtn.checked) {
+            getLocation();
+        } else {
+            cleanLocalStorage();
+        }
+    }
+
+    function loadMarkers() {
+
+        var isLocated = Boolean(localStorage.getItem("Lat"));
+        var select = document.getElementById("office");
+        var values = select.options;
+        var count = values.length;
+
+        if (count == 0) {
+            alert("Select city..");
+            return false;
+        }
+
+        var data = values[0].value.split("-");
+        var zoom;
+
+        switch (true) {
+            case (count < 5):
+                zoom = 14
+                break;
+            case (count < 10):
+                zoom = 13
+                break;
+            default:
+                zoom = 12
+        }
+
+        var center = { lat: Number(data[0]), lng: Number(data[1]) };
+
+        if (isLocated) {
+            var _lat = localStorage.getItem("Lat");
+            var _lng = localStorage.getItem("Lng");
+            center = { lat: Number(_lat), lng: Number(_lng) };
+            zoom = 14;
+        }
+
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: zoom,
+            center: center,
+        });
+
+        if (isLocated) {
+            const svgMarker = {
+                path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+                fillColor: "blue",
+                fillOpacity: 0.6,
+                strokeWeight: 0,
+                rotation: 0,
+                scale: 2,
+                anchor: new google.maps.Point(15, 30),
+            };
+            var marker = new google.maps.Marker({
+                position: center,
+                map: map,
+                icon: svgMarker,
+                title: "You are here.",
+            });
+        }
+
+
+        for (var i = 0; i < count; i++) {
+            var data = values[i].value.split("-");
+            var title = data[2].split(' ').slice(2).join(' ');
+            var marker = new google.maps.Marker({
+                position: { lat: Number(data[0]), lng: Number(data[1]) },
+                map: map,
+                title: title,
+            });
+        }
+    }
+
+    function initMap() {
+        if ('@ViewBag.Flag' == "empty") {
+            return false;
+        }
+        const center = { lat: 42.866727397, lng: 25.493093396111 };
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 7,
+            center: center,
+        });
+    }
+
+    window.initMap = initMap;
+
+    function addAddress() {
+        var data = document.getElementById("office")
+        var text = data.options[data.selectedIndex].text;
+        document.getElementById("hiddenAddress").value = text;
+    }
+
+
+    async function loadOffices() {
+        var e = document.getElementById("city");
+        var value = e.value;
+        if (value == "default") {
+            return false;
+        }
+        var text = e.options[e.selectedIndex].text;
+        var element = document.getElementById("office")
+        element.innerHTML = "";
+        var data;
+        var uname = "gogata1905@gmail.com";
+        var pword = "Chelsea05";
+        const offices = await fetch(`https://ee.econt.com/services/Nomenclatures/NomenclaturesService.getOffices.json`, {
+            method: "POST",
+            headers: {
+                "Authorization": "Basic " + (uname + ":" + pword),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                countryCode: "BGR",
+                cityID: value
+            })
+        });
+        data = await offices.json();
+        $.each(data, function (index, value) {
+            $.each(value, function (el, v) {
+                var objValues = Object.values(v);
+                var id = objValues[8]["location"]["latitude"] + "-" + objValues[8]["location"]["longitude"] + "-" + objValues[8]["fullAddressEn"];
+                var option = document.createElement("option")
+                option.value = id;
+                option.innerText = objValues[8]["fullAddressEn"];
+                element.appendChild(option);
+            })
+        });
+    }
+
+    async function loadCities() {
+        if ('@ViewBag.Flag' == "empty") {
+            return false;
+        }
+        var element = document.getElementById("city")
+        element.innerHTML = "";
+        var firstElement = document.createElement("option")
+        firstElement.innerText = "Select city..";
+        firstElement.value = "default";
+        element.appendChild(firstElement);
+
+        var data = await getData();
+        $.each(data, function (index, value) {
+            $.each(value, function (e, v) {
+                var objValues = Object.values(v);
+                if (parseInt(objValues[0]) >= 0 && parseInt(objValues[0]) <= 100) {
+                    var option = document.createElement("option")
+                    option.value = objValues[0];
+                    option.innerText = objValues[4];
+                    element.appendChild(option);
+                } else {
+                    return false;
+                }
+            })
+        });
+    }
+
+    function myFunction(id) {
+        var elementId1 = "qty" + id;
+        var elementId2 = "price" + id;
+        var elementId3 = "total" + id;
+        value1 = parseFloat(document.getElementById(elementId1).value);
+        value2 = parseFloat(document.getElementById(elementId2).value);
+        if (!value1 == "" && !value2 == "") {
+            sum = value1 * value2;
+            document.getElementById(elementId3).value = sum.toFixed(2);
+        }
+    }
+
+    function totalValue() {
+        var total = 0
+        elements = document.getElementsByClassName("cost");
+        Array.from(elements).forEach((el) => {
+            if (parseFloat(el.value) > 0) {
+                total = total + parseFloat(el.value);
+            }
+        });
+        document.getElementById("total").value = total.toFixed(2);
+    }
+
+    async function getData() {
+        var uname = "gogata1905@gmail.com";
+        var pword = "Chelsea05";
+        const cities = await fetch(`https://ee.econt.com/services/Nomenclatures/NomenclaturesService.getCities.json`, {
+            method: "POST",
+            headers: {
+                "Authorization": "Basic " + (uname + ":" + pword),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ countryCode: "BGR" })
+        });
+        return cities.json();
+    }
+
+</script>
+
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
 <body onload="loadCities()">
-<div class="text-center row">
-    @if(Model.Any())
-    {     
+    <div class="text-center row">
+        @if (Model.Any())
+        {
             <form asp-controller="Cart" asp-action="Checkout" method="post">
 
                 <table class="table table-striped" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Mileage</th>
+                            <th>Year</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th></th>
+                            <th>Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr >
+
+                                <td>
+                                    <label>@item.Brand</label>
+                                    <input type="hidden" asp-for="@item.Brand" readonly value="@item.Brand">
+                                </td>
+                                <td>
+                                    <label>@item.ModelOfCar</label>
+                                    <input type="hidden" asp-for="@item.ModelOfCar" readonly value="@item.ModelOfCar">
+                                </td>
+                                <td>
+                                    <label>@item.Mileage</label>
+                                    <input type="hidden" asp-for="@item.Mileage" readonly value="@item.Mileage">
+                                </td>
+                                <td>
+                                    <label>@item.Year</label>
+                                    <input type="hidden" asp-for="@item.Year" readonly value="@item.Year">
+                                </td>
+                                <td>
+                                    <input asp-for="@item.OrderQuantity" id="@("qty" + item.Id)" class="my_class" type="number" value="0" min="1" onchange="myFunction(@item.Id); totalValue();">
+                                    @* max="@item.Quantity" problem or not? *@
+                                </td>
+                                <td>
+                                    <label>@item.Price</label>
+                                    <input type="hidden" asp-for="@item.Price" id="@("price" + item.Id)" readonly value="@item.Price">
+                                </td>
+                                <td>
+                                    <a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.Id" class="btn btn-danger mb-2">Remove</a>
+                                </td>
+                                <td>
+                                    <input type="text" size="5" id="@("total" + item.Id)" class="cost" name="cost" readonly />
+
+                                </td>
+                                <input type="hidden" asp-for="@item.Id" readonly value="@item.Id">
+                            </tr>
+
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><label for="total">Total:</label></td>
+                            <td><input readonly name="total" id="total" size="5"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="container">
+                    <div class="row">
+                        <div id="map" style="width: 62%"></div>
+
+                        <table class="table table-striped" style="float: left; width: 30%; display:inline-block">
                             <thead>
                                 <tr>
-                                    <th>Brand</th>
-                                    <th>Model</th>
-                                    <th>Mileage</th>
-                                    <th>Year</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th></th>
-                                    <th>Cost</th>
+                                    <th>
+                                        <label for="address">Delivery Address:</label>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model)
-                                {    
-                                    <tr >
+                                <tr>
+                                    <td>
+                                        <label for="City" style="float: left;">City:</label>
 
-                                        <td>
-                                            <label>@item.Brand</label>
-                                            <input type="hidden" asp-for="@item.Brand" readonly value="@item.Brand">
-                                        </td>
-                                        <td>
-                                            <label>@item.ModelOfCar</label>
-                                            <input type="hidden" asp-for="@item.ModelOfCar" readonly value="@item.ModelOfCar">
-                                        </td>
-                                        <td>
-                                            <label>@item.Mileage</label>
-                                            <input type="hidden" asp-for="@item.Mileage" readonly value="@item.Mileage">
-                                        </td>
-                                        <td>
-                                            <label>@item.Year</label>
-                                            <input type="hidden" asp-for="@item.Year" readonly value="@item.Year">
-                                        </td>
-                                        <td>
-                                            <input asp-for="@item.OrderQuantity" id="@("qty" + item.Id)" class="my_class" type="number" value="0" min="1" onchange="myFunction(@item.Id); totalValue();">
-                                            @* max="@item.Quantity" problem or not? *@
-                                        </td>
-                                        <td>
-                                            <label>@item.Price</label>
-                                            <input type="hidden" asp-for="@item.Price" id="@("price" + item.Id)" readonly value="@item.Price">
-                                        </td>
-                                        <td>
-                                            <a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.Id" class="btn btn-danger mb-2">Remove</a>
-                                        </td>
-                                        <td>
-                                            <input type="text" size="5" id="@("total" + item.Id)" class="cost" name="cost" readonly />
-
-                                        </td>
-                                            <input type="hidden" asp-for="@item.Id" readonly value="@item.Id">
+                                    </td>
                                 </tr>
+                                <tr>
 
-                                }
-                                  <tr>
-                                       <td></td>
-                                       <td></td>
-                                       <td></td>
-                                       <td></td>
-                                       <td></td>
-                                       <td><label for="total">Total:</label></td>
-                                       <td><input readonly name="total" id="total" size="5"></td>
-                                  </tr>                           
+                                    <td>
+                                        <select required name="City" style="width: 400px" id="city" onclick="loadOffices()">
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="Office" style="float: left;">Econt office:</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name="Office" style="width: 400px" id="office" required>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="location" onclick="shareLocation()">
+                                            <label class="form-check-label" style="float: left;">Share location</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-secondary" style="float: left;" onclick="loadMarkers()">Show offices on the map</a>
+                                        <input class="btn btn-success" type="submit" style="float: right;" value="Checkout" onclick="addAddress()" />
+
+                                    </td>
+                                </tr>
                             </tbody>
+
                         </table>
+                    </div>
+                </div>
 
                 <input type="hidden" name="address" id="hiddenAddress">
-                
 
-            </form> 
 
-    }
-    else
-    {
-        <h3>No items in cart</h3>
-    }
+            </form>
+
+        }
+        else
+        {
+            <h3>No items in cart</h3>
+        }
     </div>
 
-
+    
+@*     <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBag_3P2CGYFJAffezfGLegmC1Q5hUOEZU&callback=initMap" loading="async">
+    </script> *@
+       
 
 </body>
 
@@ -100,4 +390,3 @@
 
 
 
-            

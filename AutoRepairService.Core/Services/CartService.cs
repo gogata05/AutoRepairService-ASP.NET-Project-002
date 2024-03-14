@@ -109,7 +109,6 @@ namespace AutoRepairService.Core.Services
                 sb.AppendLine($"\"item{i + 1}\" : ");
                 sb.Append("{");
                 sb.AppendLine($"\"itemId\" : \"{collection["item.Id"][i]}\",");
-                sb.AppendLine($"\"Available\" : \"{collection["item.Quantity"][i]}\",");
                 sb.AppendLine($"\"Ordered\" : \"{collection["item.OrderQuantity"][i]}\",");
                 sb.AppendLine($"\"Price\" : \"{collection["item.Price"][i]:F2}\",");
                 sb.AppendLine($"\"Cost\" : \"{collection["cost"][i]:F2}\"");
@@ -122,6 +121,7 @@ namespace AutoRepairService.Core.Services
             sb.Append($"\"CityId\":\"{collection["City"]}\"");
             sb.Append($"\"OfficeLocation\":\"{collection["Office"]}\"");
             sb.Append("}");
+
 
             var itemsDetails = sb.ToString().Trim();
 
@@ -156,9 +156,9 @@ namespace AutoRepairService.Core.Services
                 Id = x.Car.Id,
                 Brand = x.Car.Brand,
                 ModelOfCar = x.Car.ModelOfCar,
-                Price = x.Car.Price,
                 Mileage = x.Car.Mileage,
                 Year = x.Car.Year,
+                Price = x.Car.Price,
                 Category = x.Car.Category.Name,
                 Description = x.Car.Description,
                 OwnerId = x.Car.Owner.Id,

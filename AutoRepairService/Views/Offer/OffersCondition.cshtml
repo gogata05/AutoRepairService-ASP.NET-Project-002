@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyOffersViewModel>
+﻿@model IEnumerable<OfferServiceViewModel>
 
 @{
     ViewBag.Title = "My Offers";
@@ -12,42 +12,25 @@
         @foreach (var offer in Model)
         {
             <div class="card col-4" style="width: 20rem;">
-                @* <img class="card-img-top" style="width: 18rem;"
-        src="@repair.ImageUrl" alt="Book Image">*@
                 <div class="card-body">
-
-                    @*<h5 class="card-title mt-1">@repair.Title</h5>*@
-                    <p class="mb-0">Description: @offer.Description</p>
-                    <p class="mb-0">Repair Owner: @offer.RepairOwnerName</p>
+                    <p class="mb-0">Description: @offer.Description </p>
+                    <p class="mb-0">Repair Brand: @offer.RepairBrand</p>
+                    <p class="mb-0">Repair Model: @offer.RepairModel</p>
+                    <p class="mb-0">Repair description: @offer.RepairDescription</p>
                     <p class="mb-0">Price: @offer.Price.ToString()</p>
-                    <p class="mb-0">Condition: @(offer.IsAccepted == null ? "Offer is not reviewed" : offer.IsAccepted == true ? "Offer is Accepted" : "Offer is Declined")</p>
-                
-
-                </div>
-
-                @*<form class="input-group-sm" asp-route-repairId="id" asp-controller="Offer" asp-action="Review" method="post">
-        <input type="submit" value= class="fs-6 btn btn-success mb-3 p-2" />
-        </form>
-                <a asp-controller="Offer" asp-action="Review" asp-route-id=@offer.OfferId class="btn btn-primary mb-2">Review This Offer</a>
-
-                <a asp-controller="Repair" asp-action="Details" asp-route-id="@repair.Id" class="btn btn-success mb-2">Details</a>
+                    <p class="mb-0">
+                        Condition: @(offer.IsAccepted == null ? "Offer is not reviewed" : offer.IsAccepted == true ? "Offer is Accepted" : "Offer is Declined")   @if (offer.IsAccepted == false)
+                                                                                                                                                                  {
+                                                                                                                                                                      <a asp-controller="Offer" asp-action="Delete" asp-route-id="@User.Id()" asp-route-offerId="@offer.Id" onclick="return confirm('Are sure wants remove this offer?');">❌</a>
+                                                                                                                                                                  }
+                    </p>
 
 
-        @if (this.User.Id() == repair.OwnerId)
-        {
-        <a asp-controller="Repair" asp-action="Edit" asp-route-id="@repair.Id" class="btn btn-primary mb-2">Edit</a>
 
-        <a asp-controller="Repair" asp-action="Delete" asp-route-id="@repair.Id" class="btn btn-danger mb-2">Delete</a>
-        }
-        else
-        {
-        <a asp-controller="Offer" asp-action="Send" asp-route-id="@repair.Id" class="btn btn-success mb-2">Make offer</a>
-
-        }*@
+                </div>                
             </div>
         }
     </div>
-    //
 }
 else
 {
