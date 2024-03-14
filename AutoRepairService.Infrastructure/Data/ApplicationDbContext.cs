@@ -38,13 +38,13 @@ namespace AutoRepairService.Infrastructure.Data
         {
             //Remove comment to seed the DB(Comment to start Unit tests)
 
-            builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new RoleConfiguration());
-            builder.ApplyConfiguration(new UserRoleConfiguration());
-            builder.ApplyConfiguration(new RepairStatusConfiguration());
-            builder.ApplyConfiguration(new RepairCategoryConfiguration());
-            builder.ApplyConfiguration(new CarCategoryConfiguration());
-            builder.ApplyConfiguration(new CarConfiguration());
+            //builder.ApplyConfiguration(new UserConfiguration());
+            //builder.ApplyConfiguration(new RoleConfiguration());
+            //builder.ApplyConfiguration(new UserRoleConfiguration());
+            //builder.ApplyConfiguration(new RepairStatusConfiguration());
+            //builder.ApplyConfiguration(new RepairCategoryConfiguration());
+            //builder.ApplyConfiguration(new CarCategoryConfiguration());
+            //builder.ApplyConfiguration(new CarConfiguration());
 
             //Remove comment to seed the DB(Comment to start Unit tests)
 
