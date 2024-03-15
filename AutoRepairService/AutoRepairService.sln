@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoRepairService.Core", ".
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoRepairService.Infrastructure", "..\AutoRepairService.Infrastructure\AutoRepairService.Infrastructure.csproj", "{8B1ABEB4-69D0-49BA-82EA-F37E9FE67F94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skydiving.UnitTests", "..\Skydiving.UnitTests\Skydiving.UnitTests.csproj", "{23EA0E40-8059-470A-85A3-68B7F113D7CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoRepairService.UnitTests", "..\AutoRepairService.UnitTests\AutoRepairService.UnitTests.csproj", "{2ED02993-6C94-4A79-BC2E-F3E4C527C882}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{8B1ABEB4-69D0-49BA-82EA-F37E9FE67F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B1ABEB4-69D0-49BA-82EA-F37E9FE67F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B1ABEB4-69D0-49BA-82EA-F37E9FE67F94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23EA0E40-8059-470A-85A3-68B7F113D7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23EA0E40-8059-470A-85A3-68B7F113D7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23EA0E40-8059-470A-85A3-68B7F113D7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23EA0E40-8059-470A-85A3-68B7F113D7CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ED02993-6C94-4A79-BC2E-F3E4C527C882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ED02993-6C94-4A79-BC2E-F3E4C527C882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ED02993-6C94-4A79-BC2E-F3E4C527C882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ED02993-6C94-4A79-BC2E-F3E4C527C882}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

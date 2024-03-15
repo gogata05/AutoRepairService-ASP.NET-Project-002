@@ -15,114 +15,140 @@ namespace AutoRepairService.Core.Services
         {
             repo = _repo;
         }
-
-        public async Task AcceptOfferAsync(Offer offer)
+       
+        public async Task AcceptOfferAsync(int offerId)
         {
-            offer.IsAccepted = true;
-            await repo.SaveChangesAsync();
-        }
+            if (await OfferExists(offerId))
+            {
+                int repairId = await repo.AllReadonly<RepairOffer>().Where(o => o.OfferId == offerId).Select(x => x.RepairId).FirstOrDefaultAsync();
 
-        public async Task DeclineOfferAsync(Offer offer)
+                if (repairId == 0)
+                {
+                    throw new Exception("Repair not found");
+                }
+
+                var offer = await GetOfferAsync(offerId);
+                offer.IsAccepted = true;
+
+                var repair = await repo.GetByIdAsync<Repair>(repairId);
+                repair.MechanicId = offer.OwnerId;
+                repair.IsTaken = true;
+
+                await repo.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Offer don't exist");
+            }
+        }
+        
+        public async Task DeclineOfferAsync(int offerId)
         {
-            offer.IsAccepted = false;
-            await repo.SaveChangesAsync();
+            if (await OfferExists(offerId))
+            {
+                var offer = await GetOfferAsync(offerId);
+                offer.IsAccepted = false;
+                await repo.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Offer don't exist");
+            }
         }
-
+       
         public async Task<Offer> GetOfferAsync(int id)
         {
-            //if (await OfferExists(id))
-            //{
-
-            //}
-            return await repo.GetByIdAsync<Offer>(id);
+            var offer = await repo.All<Offer>()
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (offer == null)
+            {
+                throw new Exception("Offer don't exist");
+            }
+            return offer;
         }
-
-        public async Task<IEnumerable<MyOffersViewModel>> MyOffersAsync(string userId)
-        {
-            return await repo.AllReadonly<RepairOffer>().Where(j => j.Repair.OwnerId == userId)
-                .Select(x => new MyOffersViewModel()
-                {
-                    Description = x.Offer.Description,
-                    MechanicName = x.Offer.OwnerId,
-                    OfferId = x.Offer.Id
-
-                }).ToListAsync();
-
-
-
-            //
-            //return .Select(async x => new MyOffersViewModel()
-            //{
-            //    Description = x.Offer.Description,
-            //    ContractorName = "Name"
-
-
-            //}).ToListAsync();
-        }
-
+       
         public async Task<bool> OfferExists(int id)
         {
             return await repo.AllReadonly<Offer>().AnyAsync(x => x.Id == id);
         }
-
-        public async Task<IEnumerable<MyOffersViewModel>> OffersConditionAsync(string userId)
+        
+        public async Task<IEnumerable<OfferServiceViewModel>> OffersConditionAsync(string userId)
         {
-            return await repo.AllReadonly<RepairOffer>().Where(j => j.Offer.OwnerId == userId)
-                .Select(x => new MyOffersViewModel()
-                {
-                    Description = x.Offer.Description,
-                    MechanicName = x.Offer.OwnerId,
-                    RepairOwnerId = x.Repair.Owner.Id,
-                    RepairOwnerName = x.Repair.Owner.UserName,
-                    IsAccepted = x.Offer.IsAccepted,
-                    OfferId = x.Offer.Id
-
-                }).ToListAsync();
-        }
-
-        public async Task<OfferServiceViewModel> ReviewOfferAsync(int id) // change with single return
-        {   // check if offer exist
-
-            var offer = await repo.AllReadonly<Offer>()
-                .Where(x => x.Id == id)
-                .Include(j => j.RepairsOffers.Where(o => o.OfferId == id))
+            var offersCondition = await repo.AllReadonly<RepairOffer>().Where(j => j.Offer.OwnerId == userId && j.Offer.IsActive == true)
                 .Select(x => new OfferServiceViewModel()
                 {
-                    Id = id,
-                    Price = x.Price,
-                    Description = x.Description,
-                    OwnerId = x.OwnerId,
-                    RepairId = x.RepairsOffers.Select(x => x.RepairId).First()
-                }).FirstOrDefaultAsync();
+                    Description = x.Offer.Description,
+                    MechanicName = x.Offer.Owner.UserName,
+                    RepairCategory = x.Repair.Category.Name ?? "include category!",
+                    RepairBrand = x.Repair.Brand,
+                    RepairModel = x.Repair.CarModel,
+                    IsAccepted = x.Offer.IsAccepted,
+                    Id = x.Offer.Id,
+                    Price = x.Offer.Price,
+                    MechanicPhoneNumber = x.Offer.Owner.PhoneNumber,
+                    FirstName = x.Offer.Owner.FirstName,
+                    LastName = x.Offer.Owner.LastName,
+                    RepairDescription = x.Repair.Description,
+                    RepairId = x.RepairId,
+                    OwnerId = userId,
+                    Rating = "Rating"
 
-            return offer;
+                }).ToListAsync();
 
-            //    var offer = await repo.GetByIdAsync<Offer>(id)
-            // .Include(j => j.RepairsOffers.Where(o => o.OfferId == id))
-            // .Select(x => new OfferViewModel()
-            // {
-            //     Description = x.Description,
-            //     OwnerId = x.OwnerId,
-            //     RepairId = x.RepairsOffers.Select(x => x.RepairId).First()
-            // }).FirstOrDefaultAsync();
+            if (offersCondition == null)
+            {
+                throw new Exception("RepairOffer entity error");
+            }
 
-            //    return offer;
-
+            return offersCondition;
         }
+       
+        public async Task RemoveOfferAsync(string id, int offerId)
+        {
+            if (!await OfferExists(offerId))
+            {
+                throw new Exception("Offer don't exist");
+            }
 
-        /*repo.AllReadonly<User>().Where(u => u.Id == x.Offer.OwnerId).Select(x => x.UserName)*/// add name to offer?
+            var offer = await repo.GetByIdAsync<Offer>(offerId);
+
+            if (offer.OwnerId != id)
+            {
+                throw new Exception("User not owner");
+            }
+
+            if (offer.IsAccepted == true || offer.IsAccepted == null)
+            {
+                throw new Exception("This offer can't be deleted");
+            }
+
+            offer.IsActive = false;
+            await repo.SaveChangesAsync();
+        }
+      
         public async Task SendOfferAsync(OfferViewModel model, int repairId, string userId)
         {
-
-            // check model state?
-            //check if offer already exist
             var repair = await repo.GetByIdAsync<Repair>(repairId);
-            var user = await repo.GetByIdAsync<User>(userId);
+            if (repair == null)
+            {
+                throw new Exception("Invalid repair Id");
+            }
+
+            var userOfferExist = await repo.AllReadonly<RepairOffer>()
+                .Where(x => x.Offer.OwnerId == userId
+                && x.RepairId == repairId
+                && x.Offer.IsAccepted != false)
+                .AnyAsync();
+
+            if (userOfferExist)
+            {
+                throw new Exception("One offer per repair");
+            }
+
             var offer = new Offer()
             {
                 Description = model.Description,
                 OwnerId = userId,
-                // Owner = user,
                 Price = model.Price
 
             };

@@ -1,12 +1,12 @@
-﻿
-using AutoRepairService.Core.IServices;
+﻿using AutoRepairService.Core.IServices;
 using AutoRepairService.Core.Services;
 using AutoRepairService.Core.ViewModels;
 using AutoRepairService.Infrastructure.Data;
 using AutoRepairService.Infrastructure.Data.Common;
 using AutoRepairService.Infrastructure.Data.EntityModels;
 using Microsoft.EntityFrameworkCore;
-namespace Skydiving.UnitTests
+
+namespace AutoRepairService.UnitTests
 {
     public class RepairServiceTests
     {
@@ -19,7 +19,7 @@ namespace Skydiving.UnitTests
         public void Setup()
         {
             var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("Skydiving_DB")
+                .UseInMemoryDatabase("AutoRepairService_DB")
                 .Options;
             context = new ApplicationDbContext(contextOptions);
             repo = new Repository(context);

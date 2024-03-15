@@ -11,11 +11,16 @@ namespace AutoRepairService.Core.ViewModels.Offer
         [Required]
         public string OwnerId { get; set; } = null!;
 
+        //[Required]
+        public string? FirstName { get; set; }
+
+        //[Required]
+        public string? LastName { get; set; }
+
         [Required]
         public int RepairId { get; set; }
 
         [Required]
         public decimal Price { get; set; }
-
     }
 }

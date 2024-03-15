@@ -8,18 +8,16 @@ namespace AutoRepairService.Core.IServices
     {
         Task SendOfferAsync(OfferViewModel model, int repairId, string userId);
 
-        Task<IEnumerable<MyOffersViewModel>> MyOffersAsync(string userId);
-
-        Task<IEnumerable<MyOffersViewModel>> OffersConditionAsync(string userId);
-
-        Task<OfferServiceViewModel> ReviewOfferAsync(int id);
+        Task<IEnumerable<OfferServiceViewModel>> OffersConditionAsync(string userId);
 
         Task<bool> OfferExists(int id);
 
         Task<Offer> GetOfferAsync(int id);
 
-        Task AcceptOfferAsync(Offer offer);
+        Task AcceptOfferAsync(int offerId);
 
-        Task DeclineOfferAsync(Offer offer);
+        Task DeclineOfferAsync(int offerId);
+
+        Task RemoveOfferAsync(string id, int offerId);
     }
 }
