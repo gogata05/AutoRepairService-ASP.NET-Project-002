@@ -88,7 +88,7 @@ Home page with the last 3 cars added:
 Live Chat Support between customer and admin:
 
 
-![image](Images/Home%20page%20with%20the%20last%203%20cars%20added.png)
+![image](Images/Live%20Chat%20Support%20between%20customer%20and%20admin.png)
 
 
 Cart with Google Maps and Econt offices:
