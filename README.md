@@ -93,7 +93,7 @@ Live Chat Support between customer and admin:
 
 Cart with Geolocation with Google Maps and Econt offices:
 
-![image](images/Cart%20with%20Geolocation%20with%20Google%20Maps%20and%20Econt%20offices.png)
+![image](Images/Cart%20with%20Geolocation%20with%20Google%20Maps%20and%20Econt%20offices.png)
 
 
 Car shop:
